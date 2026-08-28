@@ -1,0 +1,105 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Tag from './Tag.astro';
+import {
+  entrySlug,
+  formatDateRange,
+  localizedPath,
+  useTranslations,
+  type Lang,
+} from '../i18n/utils';
+
+type Collection = 'skills' | 'education' | 'experience';
+
+interface Props {
+  entry: CollectionEntry<Collection>;
+  collection: Collection;
+  lang: Lang;
+}
+const { entry, collection, lang } = Astro.props;
+const t = useTranslations(lang);
+const { Content } = await render(entry);
+
+const data = entry.data as CollectionEntry<Collection>['data'] & {
+  institution?: string;
+  company?: string;
+  specialty?: string;
+  location?: string;
+  category?: string;
+  level?: string;
+  tech?: string[];
+  startDate?: string;
+  endDate?: string;
+};
+
+const slug = entrySlug(entry);
+const backLabel =
+  collection === 'skills'
+    ? t('section.skills')
+    : collection === 'education'
+      ? t('section.education')
+      : t('section.experience');
+
+// The organisation shown under the title, whichever collection this is.
+// Skills have no organisation, so this is simply absent for them.
+const org = data.institution ?? data.company;
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.summary}
+  lang={lang}
+  route={`${collection}/${slug}`}
+>
+  <article class="mx-auto max-w-3xl">
+    <a
+      href={localizedPath(collection, lang)}
+      class="inline-flex items-center gap-1.5 text-sm text-zinc-400 transition hover:text-accent"
+    >
+      <span aria-hidden="true">←</span> {backLabel}
+    </a>
+
+    <header class="mt-6 border-b border-edge pb-6">
+      <p class="text-xs text-zinc-500">
+        {data.startDate && formatDateRange(data.startDate, data.endDate, lang)}
+        {data.startDate && data.location && <span> · </span>}
+        {data.location && <span>{data.location}</span>}
+        {!data.startDate && data.category && <span>{data.category}</span>}
+        {!data.startDate && data.category && data.level && <span> · </span>}
+        {!data.startDate && data.level && <span>{data.level}</span>}
+      </p>
+
+      <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">
+        {data.title}
+      </h1>
+
+      {org && <p class="mt-1.5 text-base text-accent">{org}</p>}
+      {
+        data.specialty && (
+          <p class="mt-2 text-sm text-zinc-400">
+            <span class="text-zinc-500">{t('detail.specialty')}:</span> {data.specialty}
+          </p>
+        )
+      }
+
+      <p class="mt-4 text-base leading-relaxed text-zinc-300">{data.summary}</p>
+
+      {
+        data.tech && data.tech.length > 0 && (
+          <div class="mt-5 flex flex-wrap gap-1.5">
+            {data.tech.map((item) => (
+              <Tag>{item}</Tag>
+            ))}
+          </div>
+        )
+      }
+
+
+    </header>
+
+    <div class="prose-dark mt-8">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

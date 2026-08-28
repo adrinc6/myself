@@ -1,0 +1,24 @@
+---
+/**
+ * The clickable card used for every item (project, degree, role).
+ * Renders as <a> when `href` is given, otherwise as a plain container.
+ */
+interface Props {
+  href?: string;
+  class?: string;
+}
+const { href, class: className } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+  href={href}
+  class:list={[
+    'group relative flex flex-col rounded-xl border border-edge bg-surface p-5 transition duration-200',
+    href &&
+      'hover:border-edge-strong hover:bg-surface-raised hover:-translate-y-0.5 focus-visible:border-accent',
+    className,
+  ]}
+>
+  <slot />
+</Tag>

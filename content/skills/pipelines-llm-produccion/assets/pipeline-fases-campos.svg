@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" width="880" height="520" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+  <style>
+    .box{fill:#f4f6f8;stroke:#5b6b7c;stroke-width:1.5;rx:6}
+    .accent{fill:#e8f0fb;stroke:#2f5d8f;stroke-width:1.8;rx:6}
+    .guard{fill:#fdf1e7;stroke:#a5651f;stroke-width:1.6;rx:6}
+    .out{fill:#eef6ee;stroke:#3d6b45;stroke-width:1.5;rx:6}
+    .t{font-size:12px;fill:#1d2733}
+    .tb{font-size:13px;fill:#1d2733;font-weight:600}
+    .s{font-size:11px;fill:#5b6b7c}
+    .ti{font-size:16px;fill:#1d2733;font-weight:600}
+    .ar{stroke:#5b6b7c;stroke-width:1.5;fill:none;marker-end:url(#a)}
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5b6b7c"/>
+    </marker>
+  </defs>
+  <rect fill="#ffffff" width="880" height="520"/>
+  <text class="ti" x="24" y="32">De lenguaje natural a datos estructurados validados</text>
+  <text class="s" x="24" y="52">Esquema conceptual. Las fases y los campos son ilustrativos.</text>
+
+  <rect class="box" x="24" y="80" width="140" height="50"/>
+  <text class="tb" x="94" y="103" text-anchor="middle">Entrada</text>
+  <text class="s" x="94" y="120" text-anchor="middle">lenguaje natural</text>
+  <path class="ar" d="M164,105 L200,105"/>
+
+  <rect class="accent" x="200" y="80" width="160" height="50"/>
+  <text class="tb" x="280" y="103" text-anchor="middle">Preparación</text>
+  <text class="s" x="280" y="120" text-anchor="middle">normalizar la entrada</text>
+  <path class="ar" d="M360,105 L396,105"/>
+
+  <rect class="accent" x="396" y="80" width="170" height="50"/>
+  <text class="tb" x="481" y="103" text-anchor="middle">Segmentación</text>
+  <text class="s" x="481" y="120" text-anchor="middle">acotar el contenido</text>
+  <path class="ar" d="M566,105 L602,105"/>
+
+  <rect class="box" x="602" y="80" width="160" height="50"/>
+  <text class="tb" x="682" y="103" text-anchor="middle">Reparto por campo</text>
+  <text class="s" x="682" y="120" text-anchor="middle">planificación de la cola</text>
+
+  <path class="ar" d="M682,130 L682,150 L140,150 L140,178"/>
+  <path class="ar" d="M682,150 L340,150 L340,178"/>
+  <path class="ar" d="M682,150 L540,150 L540,178"/>
+  <path class="ar" d="M682,150 L740,150 L740,178"/>
+
+  <rect class="accent" x="60" y="178" width="160" height="56"/>
+  <text class="tb" x="140" y="201" text-anchor="middle">Extractor · campo 1</text>
+  <text class="s" x="140" y="220" text-anchor="middle">prompt propio + reglas</text>
+
+  <rect class="accent" x="260" y="178" width="160" height="56"/>
+  <text class="tb" x="340" y="201" text-anchor="middle">Extractor · campo 2</text>
+  <text class="s" x="340" y="220" text-anchor="middle">prompt propio + reglas</text>
+
+  <rect class="accent" x="460" y="178" width="160" height="56"/>
+  <text class="tb" x="540" y="201" text-anchor="middle">Extractor · campo 3</text>
+  <text class="s" x="540" y="220" text-anchor="middle">prompt propio + reglas</text>
+
+  <text class="tb" x="740" y="212" text-anchor="middle">· · ·</text>
+
+  <text class="s" x="24" y="258">Cada campo es independiente: evoluciona y se mide por separado. Se ejecutan en paralelo.</text>
+
+  <path class="ar" d="M140,234 L140,290 L400,290"/>
+  <path class="ar" d="M340,234 L340,290"/>
+  <path class="ar" d="M540,234 L540,290 L480,290"/>
+
+  <rect class="guard" x="240" y="290" width="400" height="56"/>
+  <text class="tb" x="440" y="313" text-anchor="middle">Validación determinista</text>
+  <text class="s" x="440" y="332" text-anchor="middle">contra catálogo · deduplicación · sin corrección silenciosa</text>
+
+  <path class="ar" d="M240,318 L150,318 L150,376"/>
+  <rect class="guard" x="24" y="376" width="252" height="62"/>
+  <text class="tb" x="150" y="399" text-anchor="middle">Descartes con motivo</text>
+  <text class="s" x="150" y="418" text-anchor="middle">nada se corrige en silencio;</text>
+  <text class="s" x="150" y="432" text-anchor="middle">todo descarte queda registrado</text>
+
+  <path class="ar" d="M440,346 L440,376"/>
+  <rect class="out" x="320" y="376" width="240" height="62"/>
+  <text class="tb" x="440" y="399" text-anchor="middle">Salida estructurada</text>
+  <text class="s" x="440" y="418" text-anchor="middle">JSON estable, validado</text>
+
+  <path class="ar" d="M640,318 L730,318 L730,376"/>
+  <rect class="box" x="604" y="376" width="252" height="62"/>
+  <text class="tb" x="730" y="399" text-anchor="middle">Métricas de ejecución</text>
+  <text class="s" x="730" y="418" text-anchor="middle">tokens, coste y tiempos por fase</text>
+
+  <text class="s" x="24" y="472">Principio de diseño: ante evidencia insuficiente el sistema deja el hueco vacío en lugar de rellenarlo.</text>
+  <text class="s" x="24" y="492">Prompts versionados fuera del código: se revisan sin desplegar.</text>
+</svg>

@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { entrySlug, formatDateRange, localizedPath, type Lang } from '../i18n/utils';
+
+/**
+ * Compact row used inside the education and experience panels.
+ * A left rule plus a dot gives the timeline feel without extra markup.
+ */
+interface Props {
+  entry: CollectionEntry<'education'> | CollectionEntry<'experience'>;
+  collection: 'education' | 'experience';
+  lang: Lang;
+}
+const { entry, collection, lang } = Astro.props;
+const slug = entrySlug(entry);
+const data = entry.data;
+const org = 'institution' in data ? data.institution : data.company;
+---
+
+<li class="relative border-l border-edge pl-5 pb-5 last:pb-0">
+  <span
+    class="absolute -left-[4.5px] top-1.5 h-2 w-2 rounded-full bg-edge-strong transition group-hover/item:bg-accent"
+    aria-hidden="true"></span>
+
+  <a
+    href={localizedPath(`${collection}/${slug}`, lang)}
+    class="group/item block rounded-lg -m-2 p-2 transition hover:bg-surface-raised"
+  >
+    <p class="text-xs text-zinc-500">
+      {formatDateRange(data.startDate, data.endDate, lang)}
+    </p>
+    <h3
+      class="mt-0.5 text-sm font-semibold text-zinc-100 transition group-hover/item:text-accent"
+    >
+      {data.title}
+    </h3>
+    <p class="text-sm text-zinc-400">{org}</p>
+    <p class="mt-1.5 line-clamp-2 text-xs leading-relaxed text-zinc-500">
+      {data.summary}
+    </p>
+  </a>
+</li>

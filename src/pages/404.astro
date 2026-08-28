@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { localizedPath } from '../i18n/utils';
+---
+
+<BaseLayout title="404" lang="es" route="">
+  <div class="py-16 text-center">
+    <p class="text-5xl font-bold text-accent">404</p>
+    <h1 class="mt-4 text-2xl font-semibold text-zinc-100">
+      Página no encontrada
+    </h1>
+    <p class="mt-2 text-sm text-zinc-400">Page not found</p>
+    <a
+      href={localizedPath('', 'es')}
+      class="mt-6 inline-block rounded-lg border border-edge bg-surface px-4 py-2 text-sm font-medium text-zinc-200 transition hover:border-edge-strong hover:text-accent"
+    >
+      Volver al inicio · Back home
+    </a>
+  </div>
+</BaseLayout>

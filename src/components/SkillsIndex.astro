@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SkillRow from './SkillRow.astro';
+import { getLocalizedCollection, useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const skills = await getLocalizedCollection('skills', lang);
+---
+
+<BaseLayout title={t('section.skills')} lang={lang} route="skills">
+  <h1 class="text-3xl font-bold tracking-tight text-zinc-50">
+    {t('section.skills')}
+  </h1>
+  <p class="mt-2 max-w-2xl text-sm text-zinc-400">{t('section.skills.desc')}</p>
+
+  {
+    skills.length > 0 ? (
+      <div class="mt-8 space-y-2">
+        {skills.map((entry) => (
+          <SkillRow entry={entry} lang={lang} />
+        ))}
+      </div>
+    ) : (
+      <p class="mt-8 text-sm text-zinc-500">{t('empty.skills')}</p>
+    )
+  }
+</BaseLayout>

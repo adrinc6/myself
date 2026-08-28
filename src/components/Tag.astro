@@ -1,0 +1,25 @@
+---
+interface Props {
+  /** Muted variant for secondary metadata such as dates. */
+  variant?: 'default' | 'accent' | 'muted';
+}
+const { variant = 'default' } = Astro.props;
+
+const styles = {
+  default:
+    'border-edge bg-surface-raised text-zinc-300',
+  accent:
+    'border-accent/40 bg-accent-soft text-accent',
+  muted:
+    'border-transparent bg-transparent text-zinc-500',
+} as const;
+---
+
+<span
+  class:list={[
+    'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium whitespace-nowrap',
+    styles[variant],
+  ]}
+>
+  <slot />
+</span>

@@ -1,0 +1,52 @@
+---
+import Tag from './Tag.astro';
+import { site, hero } from '../config';
+import { type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const copy = hero[lang];
+
+const socials = [
+  { href: site.linkedin, label: 'LinkedIn' },
+  { href: site.github, label: 'GitHub' },
+  { href: `mailto:${site.email}`, label: 'Email' },
+];
+---
+
+<section class="mb-10 sm:mb-14">
+  <p class="text-sm font-medium text-accent">{copy.role}</p>
+
+  <h1
+    class="mt-2 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl md:text-5xl"
+  >
+    {copy.title}
+  </h1>
+
+  <div class="mt-5 max-w-2xl space-y-3">
+    <p class="text-base leading-relaxed text-zinc-300">{copy.intro}</p>
+    <p class="text-base leading-relaxed text-zinc-400">{copy.intro2}</p>
+  </div>
+
+  <div class="mt-6 flex flex-wrap gap-1.5">
+    {site.skills.map((skill) => <Tag variant="accent">{skill}</Tag>)}
+  </div>
+
+  <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+    {
+      socials.map((social) => (
+        <a
+          href={social.href}
+          rel="noopener noreferrer"
+          target={social.href.startsWith('mailto:') ? undefined : '_blank'}
+          class="font-medium text-zinc-300 underline decoration-edge-strong underline-offset-4 transition hover:text-accent hover:decoration-accent"
+        >
+          {social.label}
+        </a>
+      ))
+    }
+    <span class="text-zinc-500">{site.location}</span>
+  </div>
+</section>

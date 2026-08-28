@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from './Hero.astro';
+import SectionCard from './SectionCard.astro';
+import CollapsibleSection from './CollapsibleSection.astro';
+import SkillRow from './SkillRow.astro';
+import TimelineItem from './TimelineItem.astro';
+import { site } from '../config';
+import {
+  getLocalizedCollection,
+  localizedPath,
+  useTranslations,
+  type Lang,
+} from '../i18n/utils';
+
+/**
+ * The home page body, shared by the ES and EN routes so the layout exists
+ * in one place only.
+ */
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const [skills, education, experience] = await Promise.all([
+  getLocalizedCollection('skills', lang),
+  getLocalizedCollection('education', lang),
+  getLocalizedCollection('experience', lang),
+]);
+
+// The home page shows a preview; the section index pages show everything.
+const topSkills = skills.slice(0, 8);
+const topEducation = education.slice(0, 4);
+const topExperience = experience.slice(0, 4);
+---
+
+<BaseLayout title={site.name} lang={lang} route="">
+  <Hero lang={lang} />
+
+  <div class="space-y-6">
+    <!-- Skills: full width, collapsible so education and experience are
+         reachable without scrolling past a long list. -->
+    <CollapsibleSection
+      id="skills"
+      title={t('section.skills')}
+      description={t('section.skills.desc')}
+      collapseLabel={t('skills.collapse')}
+      expandLabel={t('skills.expand')}
+      storageKey="skills-open"
+    >
+      {
+        topSkills.length > 0 ? (
+          <div class="space-y-2">
+            {topSkills.map((entry) => (
+              <SkillRow entry={entry} lang={lang} />
+            ))}
+          </div>
+        ) : (
+          <p class="text-sm text-zinc-500">{t('empty.skills')}</p>
+        )
+      }
+
+      {
+        skills.length > topSkills.length && (
+          <a
+            href={localizedPath('skills', lang)}
+            class="mt-4 inline-block text-sm font-medium text-accent transition hover:text-zinc-50"
+          >
+            {t('card.viewAll')} <span aria-hidden="true">→</span>
+          </a>
+        )
+      }
+    </CollapsibleSection>
+
+    <!-- Education and experience: half width each on desktop -->
+    <div class="grid gap-6 md:grid-cols-2">
+      <SectionCard
+        id="education"
+        title={t('section.education')}
+        href={education.length > topEducation.length
+          ? localizedPath('education', lang)
+          : undefined}
+        linkLabel={t('card.viewAll')}
+      >
+        {
+          topEducation.length > 0 ? (
+            <ul>
+              {topEducation.map((entry) => (
+                <TimelineItem entry={entry} collection="education" lang={lang} />
+              ))}
+            </ul>
+          ) : (
+            <p class="text-sm text-zinc-500">{t('empty.generic')}</p>
+          )
+        }
+      </SectionCard>
+
+      <SectionCard
+        id="experience"
+        title={t('section.experience')}
+        href={experience.length > topExperience.length
+          ? localizedPath('experience', lang)
+          : undefined}
+        linkLabel={t('card.viewAll')}
+      >
+        {
+          topExperience.length > 0 ? (
+            <ul>
+              {topExperience.map((entry) => (
+                <TimelineItem entry={entry} collection="experience" lang={lang} />
+              ))}
+            </ul>
+          ) : (
+            <p class="text-sm text-zinc-500">{t('empty.generic')}</p>
+          )
+        }
+      </SectionCard>
+    </div>
+  </div>
+</BaseLayout>

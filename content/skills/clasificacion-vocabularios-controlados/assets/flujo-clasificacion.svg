@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 470" width="860" height="470" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+  <style>
+    .bg{fill:#ffffff}
+    .box{fill:#f4f6f8;stroke:#5b6b7c;stroke-width:1.5;rx:6}
+    .accent{fill:#e8f0fb;stroke:#2f5d8f;stroke-width:1.8;rx:6}
+    .cat{fill:#eef6ee;stroke:#3d6b45;stroke-width:1.5;rx:6}
+    .t{font-size:13px;fill:#1d2733}
+    .tb{font-size:13px;fill:#1d2733;font-weight:600}
+    .s{font-size:11px;fill:#5b6b7c}
+    .ti{font-size:16px;fill:#1d2733;font-weight:600}
+    .ar{stroke:#5b6b7c;stroke-width:1.5;fill:none;marker-end:url(#a)}
+    .ard{stroke:#8a97a4;stroke-width:1.3;fill:none;stroke-dasharray:4 3;marker-end:url(#a)}
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5b6b7c"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="860" height="470"/>
+  <text class="ti" x="24" y="32">Clasificación de texto libre contra un vocabulario cerrado</text>
+  <text class="s" x="24" y="52">Esquema genérico de la técnica. Valores y etiquetas son de ejemplo.</text>
+
+  <rect class="box" x="24" y="80" width="150" height="54"/>
+  <text class="tb" x="99" y="103" text-anchor="middle">Texto libre</text>
+  <text class="s" x="99" y="121" text-anchor="middle">concepto extraído</text>
+
+  <path class="ar" d="M174,107 L214,107"/>
+
+  <rect class="accent" x="214" y="80" width="160" height="54"/>
+  <text class="tb" x="294" y="103" text-anchor="middle">Vectorizar</text>
+  <text class="s" x="294" y="121" text-anchor="middle">embedding del concepto</text>
+
+  <path class="ar" d="M374,107 L414,107"/>
+
+  <rect class="accent" x="414" y="80" width="180" height="54"/>
+  <text class="tb" x="504" y="103" text-anchor="middle">Buscar candidatos</text>
+  <text class="s" x="504" y="121" text-anchor="middle">similitud coseno</text>
+
+  <rect class="cat" x="640" y="72" width="196" height="70"/>
+  <text class="tb" x="738" y="97" text-anchor="middle">Catálogo indexado</text>
+  <text class="s" x="738" y="115" text-anchor="middle">subíndice por tipo de concepto</text>
+  <text class="s" x="738" y="131" text-anchor="middle">(síntoma / diagnóstico / …)</text>
+  <path class="ard" d="M640,107 L598,107"/>
+
+  <path class="ar" d="M504,134 L504,168"/>
+
+  <rect class="box" x="330" y="168" width="348" height="62"/>
+  <text class="tb" x="504" y="192" text-anchor="middle">¿Supera el umbral de similitud?</text>
+  <text class="s" x="504" y="212" text-anchor="middle">umbral calibrado por tipo de campo, no global</text>
+
+  <path class="ar" d="M330,199 L246,199 L246,262"/>
+  <text class="s" x="286" y="192" text-anchor="middle">no</text>
+
+  <rect class="box" x="120" y="262" width="252" height="58"/>
+  <text class="tb" x="246" y="286" text-anchor="middle">Sin código</text>
+  <text class="s" x="246" y="305" text-anchor="middle">se deja sin codificar, no se fuerza</text>
+
+  <path class="ar" d="M678,199 L742,199 L742,262"/>
+  <text class="s" x="704" y="192" text-anchor="middle">sí</text>
+
+  <rect class="accent" x="596" y="262" width="240" height="58"/>
+  <text class="tb" x="716" y="286" text-anchor="middle">¿Varios candidatos?</text>
+  <text class="s" x="716" y="305" text-anchor="middle">desempate explícito</text>
+
+  <path class="ar" d="M716,320 L716,352 L504,352 L504,378"/>
+  <path class="ar" d="M246,320 L246,352 L462,352"/>
+
+  <rect class="cat" x="384" y="378" width="240" height="62"/>
+  <text class="tb" x="504" y="402" text-anchor="middle">Resultado</text>
+  <text class="s" x="504" y="421" text-anchor="middle">código validado contra catálogo</text>
+
+  <text class="s" x="24" y="452">Umbral más exigente donde un falso positivo es más caro; el sistema prefiere no codificar antes que codificar mal.</text>
+</svg>

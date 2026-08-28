@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+  <style>
+    .box{fill:#f4f6f8;stroke:#5b6b7c;stroke-width:1.5;rx:6}
+    .accent{fill:#e8f0fb;stroke:#2f5d8f;stroke-width:1.8;rx:6}
+    .store{fill:#eef6ee;stroke:#3d6b45;stroke-width:1.6;rx:6}
+    .note{fill:#fdf1e7;stroke:#a5651f;stroke-width:1.4;rx:6}
+    .tb{font-size:13px;fill:#1d2733;font-weight:600}
+    .s{font-size:11px;fill:#5b6b7c}
+    .ti{font-size:16px;fill:#1d2733;font-weight:600}
+    .sec{font-size:12px;fill:#39485a;font-weight:600}
+    .ar{stroke:#5b6b7c;stroke-width:1.5;fill:none;marker-end:url(#a)}
+    .arb{stroke:#a5651f;stroke-width:1.5;fill:none;marker-end:url(#c);stroke-dasharray:4 3}
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5b6b7c"/>
+    </marker>
+    <marker id="c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a5651f"/>
+    </marker>
+  </defs>
+  <rect fill="#ffffff" width="880" height="500"/>
+  <text class="ti" x="24" y="30">Ingesta reanudable y consulta híbrida</text>
+  <text class="s" x="24" y="50">Esquema genérico de la técnica. Fuentes y campos son de ejemplo.</text>
+
+  <text class="sec" x="24" y="82">INGESTA  (una vez, o cuando cambia la fuente)</text>
+
+  <rect class="box" x="24" y="94" width="150" height="56"/>
+  <text class="tb" x="99" y="117" text-anchor="middle">Fuente externa</text>
+  <text class="s" x="99" y="135" text-anchor="middle">catálogo · web sin API</text>
+  <path class="ar" d="M174,122 L212,122"/>
+
+  <rect class="accent" x="212" y="94" width="158" height="56"/>
+  <text class="tb" x="291" y="117" text-anchor="middle">Normalizar</text>
+  <text class="s" x="291" y="135" text-anchor="middle">unificar y deduplicar</text>
+  <path class="ar" d="M370,122 L408,122"/>
+
+  <rect class="accent" x="408" y="94" width="180" height="56"/>
+  <text class="tb" x="498" y="117" text-anchor="middle">Vectorizar por lotes</text>
+  <text class="s" x="498" y="135" text-anchor="middle">solo lo que falta</text>
+  <path class="ar" d="M588,122 L626,122"/>
+
+  <rect class="store" x="626" y="94" width="212" height="56"/>
+  <text class="tb" x="732" y="117" text-anchor="middle">Índices por idioma</text>
+  <text class="s" x="732" y="135" text-anchor="middle">es · en · pt, separados</text>
+
+  <rect class="note" x="408" y="168" width="180" height="46"/>
+  <text class="s" x="498" y="188" text-anchor="middle">Vectores en memoria mapeada:</text>
+  <text class="s" x="498" y="204" text-anchor="middle">no se carga todo en RAM</text>
+  <path class="arb" d="M498,168 L498,150"/>
+
+  <rect class="note" x="204" y="168" width="176" height="46"/>
+  <text class="s" x="292" y="188" text-anchor="middle">Reanudable: si falla,</text>
+  <text class="s" x="292" y="204" text-anchor="middle">sigue donde iba</text>
+  <path class="arb" d="M292,168 L292,150"/>
+
+  <line x1="24" y1="240" x2="856" y2="240" stroke="#c3ccd5" stroke-width="1"/>
+
+  <text class="sec" x="24" y="270">CONSULTA  (en cada petición)</text>
+
+  <rect class="box" x="24" y="284" width="160" height="56"/>
+  <text class="tb" x="104" y="307" text-anchor="middle">Término buscado</text>
+  <text class="s" x="104" y="325" text-anchor="middle">+ idioma</text>
+  <path class="ar" d="M184,312 L226,312"/>
+
+  <rect class="box" x="226" y="284" width="170" height="56"/>
+  <text class="tb" x="311" y="307" text-anchor="middle">Elegir índice</text>
+  <text class="s" x="311" y="325" text-anchor="middle">según idioma de entrada</text>
+
+  <path class="ar" d="M396,312 L440,290 L470,290"/>
+  <path class="ar" d="M396,312 L440,362 L470,362"/>
+
+  <rect class="accent" x="470" y="264" width="200" height="52"/>
+  <text class="tb" x="570" y="286" text-anchor="middle">Por significado</text>
+  <text class="s" x="570" y="304" text-anchor="middle">similitud de vectores</text>
+
+  <rect class="accent" x="470" y="336" width="200" height="52"/>
+  <text class="tb" x="570" y="358" text-anchor="middle">Por título</text>
+  <text class="s" x="570" y="376" text-anchor="middle">léxica, puntuada</text>
+
+  <path class="ar" d="M670,290 L710,290 L710,326 L742,326"/>
+  <path class="ar" d="M670,362 L710,362 L710,326"/>
+
+  <rect class="store" x="742" y="298" width="114" height="56"/>
+  <text class="tb" x="799" y="321" text-anchor="middle">Resultado</text>
+  <text class="s" x="799" y="339" text-anchor="middle">colapsado</text>
+
+  <text class="s" x="24" y="424">Para términos exactos la búsqueda léxica acierta más y sale más barata; el significado se reserva</text>
+  <text class="s" x="24" y="440">para lo que se escribe de muchas formas distintas.</text>
+  <text class="s" x="24" y="466">El colapso de resultados se hace en el motor de búsqueda, no en código: el trabajo va donde están los datos.</text>
+</svg>

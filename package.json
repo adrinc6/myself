@@ -1,0 +1,24 @@
+{
+  "name": "myself",
+  "version": "1.0.0",
+  "description": "Personal portfolio of Adrian Nunez - aerospace engineer & AI/data engineer",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrinc6/myself.git"
+  },
+  "license": "MIT",
+  "homepage": "https://adrinc6.github.io/myself",
+  "dependencies": {
+    "@astrojs/mdx": "^7.0.8",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.9",
+    "tailwindcss": "^4.3.3"
+  }
+}

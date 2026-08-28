@@ -1,0 +1,25 @@
+---
+import { defaultLang, localizedPath, useTranslations, type Lang } from '../i18n/utils';
+
+/**
+ * Switches language while staying on the same page. The caller passes the
+ * route without a language prefix (e.g. "skills/my-thing"), which works
+ * because both language files of an item share the folder slug.
+ */
+interface Props {
+  lang: Lang;
+  /** Current route without base or language prefix. */
+  route: string;
+}
+const { lang, route } = Astro.props;
+const t = useTranslations(lang);
+const other: Lang = lang === 'es' ? 'en' : 'es';
+---
+
+<a
+  href={localizedPath(route, other)}
+  hreflang={other}
+  class="rounded-lg border border-edge px-2.5 py-1 text-xs font-medium text-zinc-400 transition hover:border-edge-strong hover:text-zinc-100"
+>
+  {t('lang.switch')}
+</a>

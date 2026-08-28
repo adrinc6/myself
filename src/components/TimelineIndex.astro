@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TimelineItem from './TimelineItem.astro';
+import { getLocalizedCollection, useTranslations, type Lang } from '../i18n/utils';
+
+/** Full listing for education or experience. */
+interface Props {
+  lang: Lang;
+  collection: 'education' | 'experience';
+}
+const { lang, collection } = Astro.props;
+const t = useTranslations(lang);
+const entries = await getLocalizedCollection(collection, lang);
+const title = collection === 'education' ? t('section.education') : t('section.experience');
+---
+
+<BaseLayout title={title} lang={lang} route={collection}>
+  <h1 class="text-3xl font-bold tracking-tight text-zinc-50">{title}</h1>
+
+  {
+    entries.length > 0 ? (
+      <ul class="mt-8 max-w-2xl">
+        {entries.map((entry) => (
+          <TimelineItem entry={entry} collection={collection} lang={lang} />
+        ))}
+      </ul>
+    ) : (
+      <p class="mt-8 text-sm text-zinc-500">{t('empty.generic')}</p>
+    )
+  }
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+import type { GetStaticPaths } from 'astro';
+import DetailPage from '../../components/DetailPage.astro';
+import { getCollectionSlugs, getLocalizedEntry } from '../../i18n/utils';
+
+export const getStaticPaths = (async () => {
+  const slugs = await getCollectionSlugs('experience');
+  return slugs.map((slug) => ({ params: { slug } }));
+}) satisfies GetStaticPaths;
+
+const { slug } = Astro.params;
+const entry = await getLocalizedEntry('experience', slug!, 'es');
+if (!entry) return Astro.rewrite('/404');
+---
+
+<DetailPage entry={entry} collection="experience" lang="es" />

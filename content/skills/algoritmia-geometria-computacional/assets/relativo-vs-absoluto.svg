@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 460" width="860" height="460" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+  <style>
+    .ti{font-size:16px;fill:#1d2733;font-weight:600}
+    .tb{font-size:13px;fill:#1d2733;font-weight:600}
+    .s{font-size:11px;fill:#5b6b7c}
+    .cell{fill:#f4f6f8;stroke:#8a97a4;stroke-width:1.2}
+    .ok{fill:#eef6ee;stroke:#3d6b45;stroke-width:1.4}
+    .bad{fill:#fbeaea;stroke:#a33a3a;stroke-width:1.4}
+    .anchor{fill:#e8f0fb;stroke:#2f5d8f;stroke-width:2}
+    .lbl{font-size:10px;fill:#1d2733;font-weight:600}
+    .lblbad{font-size:10px;fill:#a33a3a;font-weight:600}
+    .panel{fill:#ffffff;stroke:#c3ccd5;stroke-width:1;rx:6}
+    .ar{stroke:#a33a3a;stroke-width:1.6;fill:none;marker-end:url(#r)}
+  </style>
+  <defs>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a33a3a"/>
+    </marker>
+  </defs>
+  <rect fill="#ffffff" width="860" height="460"/>
+  <text class="ti" x="24" y="30">Un error temprano: cuando se propaga y cuando queda acotado</text>
+  <text class="s" x="24" y="50">Rejilla de ejemplo, inventada. Ilustra por qué el error se contiene o se propaga.</text>
+
+  <rect class="panel" x="24" y="70" width="390" height="352"/>
+  <text class="tb" x="219" y="96" text-anchor="middle">Identidad encadenada</text>
+
+  <rect class="anchor" x="60" y="118" width="66" height="42"/><text class="lbl" x="93" y="144" text-anchor="middle">A1</text>
+  <rect class="ok" x="130" y="118" width="66" height="42"/><text class="lbl" x="163" y="144" text-anchor="middle">A2</text>
+  <rect class="ok" x="200" y="118" width="66" height="42"/><text class="lbl" x="233" y="144" text-anchor="middle">A3</text>
+  <rect class="ok" x="270" y="118" width="66" height="42"/><text class="lbl" x="303" y="144" text-anchor="middle">A4</text>
+
+  <rect class="ok" x="60" y="166" width="66" height="42"/><text class="lbl" x="93" y="192" text-anchor="middle">B1</text>
+  <rect class="bad" x="130" y="166" width="66" height="42"/><text class="lblbad" x="163" y="192" text-anchor="middle">B3</text>
+  <rect class="bad" x="200" y="166" width="66" height="42"/><text class="lblbad" x="233" y="192" text-anchor="middle">B4</text>
+  <rect class="bad" x="270" y="166" width="66" height="42"/><text class="lblbad" x="303" y="192" text-anchor="middle">B5</text>
+
+  <rect class="bad" x="60" y="214" width="66" height="42"/><text class="lblbad" x="93" y="240" text-anchor="middle">C2</text>
+  <rect class="bad" x="130" y="214" width="66" height="42"/><text class="lblbad" x="163" y="240" text-anchor="middle">C4</text>
+  <rect class="bad" x="200" y="214" width="66" height="42"/><text class="lblbad" x="233" y="240" text-anchor="middle">C5</text>
+  <rect class="bad" x="270" y="214" width="66" height="42"/><text class="lblbad" x="303" y="240" text-anchor="middle">C6</text>
+
+  <rect class="cell" x="60" y="262" width="66" height="42"/><text class="s" x="93" y="288" text-anchor="middle">sin id.</text>
+  <rect class="cell" x="130" y="262" width="66" height="42"/><text class="s" x="163" y="288" text-anchor="middle">sin id.</text>
+  <rect class="bad" x="200" y="262" width="66" height="42"/><text class="lblbad" x="233" y="288" text-anchor="middle">D6</text>
+  <rect class="bad" x="270" y="262" width="66" height="42"/><text class="lblbad" x="303" y="288" text-anchor="middle">D7</text>
+
+  <path class="ar" d="M163,208 L163,262"/>
+  <text class="s" x="60" y="330">Un error temprano arrastra todo lo que viene después.</text>
+  <text class="s" x="60" y="348">Lo que no se alcanza desde el origen se queda sin identificar.</text>
+  <text class="s" x="60" y="372">Origen</text>
+  <rect class="anchor" x="112" y="360" width="16" height="14"/>
+  <text class="s" x="140" y="372">correcto</text>
+  <rect class="ok" x="196" y="360" width="16" height="14"/>
+  <text class="s" x="224" y="372">desplazado</text>
+  <rect class="bad" x="296" y="360" width="16" height="14"/>
+
+  <rect class="panel" x="446" y="70" width="390" height="352"/>
+  <text class="tb" x="641" y="96" text-anchor="middle">Identidad verificable localmente</text>
+
+  <rect class="anchor" x="482" y="118" width="66" height="42"/><text class="lbl" x="515" y="144" text-anchor="middle">A1</text>
+  <rect class="ok" x="552" y="118" width="66" height="42"/><text class="lbl" x="585" y="144" text-anchor="middle">A2</text>
+  <rect class="anchor" x="622" y="118" width="66" height="42"/><text class="lbl" x="655" y="144" text-anchor="middle">A3</text>
+  <rect class="ok" x="692" y="118" width="66" height="42"/><text class="lbl" x="725" y="144" text-anchor="middle">A4</text>
+
+  <rect class="ok" x="482" y="166" width="66" height="42"/><text class="lbl" x="515" y="192" text-anchor="middle">B1</text>
+  <rect class="bad" x="552" y="166" width="66" height="42"/><text class="lblbad" x="585" y="192" text-anchor="middle">B3</text>
+  <rect class="anchor" x="622" y="166" width="66" height="42"/><text class="lbl" x="655" y="192" text-anchor="middle">B3</text>
+  <rect class="ok" x="692" y="166" width="66" height="42"/><text class="lbl" x="725" y="192" text-anchor="middle">B4</text>
+
+  <rect class="anchor" x="482" y="214" width="66" height="42"/><text class="lbl" x="515" y="240" text-anchor="middle">C1</text>
+  <rect class="ok" x="552" y="214" width="66" height="42"/><text class="lbl" x="585" y="240" text-anchor="middle">C2</text>
+  <rect class="ok" x="622" y="214" width="66" height="42"/><text class="lbl" x="655" y="240" text-anchor="middle">C3</text>
+  <rect class="anchor" x="692" y="214" width="66" height="42"/><text class="lbl" x="725" y="240" text-anchor="middle">C4</text>
+
+  <rect class="ok" x="482" y="262" width="66" height="42"/><text class="lbl" x="515" y="288" text-anchor="middle">D1</text>
+  <rect class="anchor" x="552" y="262" width="66" height="42"/><text class="lbl" x="585" y="288" text-anchor="middle">D2</text>
+  <rect class="ok" x="622" y="262" width="66" height="42"/><text class="lbl" x="655" y="288" text-anchor="middle">D3</text>
+  <rect class="ok" x="692" y="262" width="66" height="42"/><text class="lbl" x="725" y="288" text-anchor="middle">D4</text>
+
+  <text class="s" x="482" y="330">El mismo error queda contenido donde se produce.</text>
+  <text class="s" x="482" y="348">La propagación queda cortada; ningún elemento se queda sin identificar.</text>
+  <text class="s" x="482" y="372">Verificable</text>
+  <rect class="anchor" x="530" y="360" width="16" height="14"/>
+  <text class="s" x="558" y="372">derivado</text>
+  <rect class="ok" x="700" y="360" width="16" height="14"/>
+</svg>

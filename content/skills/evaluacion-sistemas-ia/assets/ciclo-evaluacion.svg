@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 540" width="860" height="540" font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+  <style>
+    .box{fill:#f4f6f8;stroke:#5b6b7c;stroke-width:1.5;rx:6}
+    .accent{fill:#e8f0fb;stroke:#2f5d8f;stroke-width:1.8;rx:6}
+    .gt{fill:#eef6ee;stroke:#3d6b45;stroke-width:1.6;rx:6}
+    .met{fill:#fdf1e7;stroke:#a5651f;stroke-width:1.6;rx:6}
+    .tb{font-size:13px;fill:#1d2733;font-weight:600}
+    .s{font-size:11px;fill:#5b6b7c}
+    .ti{font-size:16px;fill:#1d2733;font-weight:600}
+    .th{font-size:11px;fill:#1d2733;font-weight:600}
+    .ar{stroke:#5b6b7c;stroke-width:1.5;fill:none;marker-end:url(#a)}
+    .arl{stroke:#2f5d8f;stroke-width:1.8;fill:none;marker-end:url(#b);stroke-dasharray:5 3}
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5b6b7c"/>
+    </marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f5d8f"/>
+    </marker>
+  </defs>
+  <rect fill="#ffffff" width="860" height="540"/>
+  <text class="ti" x="24" y="32">Ciclo de evaluación de un sistema de IA</text>
+  <text class="s" x="24" y="52">Esquema genérico. Las cifras de la tabla son inventadas y solo ilustran el formato.</text>
+
+  <rect class="gt" x="24" y="82" width="190" height="66"/>
+  <text class="tb" x="119" y="106" text-anchor="middle">Casos de referencia</text>
+  <text class="s" x="119" y="124" text-anchor="middle">entrada + salida esperada</text>
+  <text class="s" x="119" y="139" text-anchor="middle">versionados con el código</text>
+
+  <path class="ar" d="M214,115 L264,115"/>
+
+  <rect class="accent" x="264" y="82" width="190" height="66"/>
+  <text class="tb" x="359" y="106" text-anchor="middle">Ejecución</text>
+  <text class="s" x="359" y="124" text-anchor="middle">flujo completo y</text>
+  <text class="s" x="359" y="139" text-anchor="middle">cada componente aislado</text>
+
+  <path class="ar" d="M454,115 L504,115"/>
+
+  <rect class="accent" x="504" y="82" width="190" height="66"/>
+  <text class="tb" x="599" y="106" text-anchor="middle">Comparación</text>
+  <text class="s" x="599" y="124" text-anchor="middle">salida real frente a</text>
+  <text class="s" x="599" y="139" text-anchor="middle">salida esperada</text>
+
+  <path class="ar" d="M599,148 L599,178"/>
+
+  <rect class="met" x="180" y="178" width="500" height="150"/>
+  <text class="tb" x="430" y="201" text-anchor="middle">Métricas en una sola tabla</text>
+  <line x1="200" y1="212" x2="660" y2="212" stroke="#a5651f" stroke-width="1"/>
+  <text class="th" x="212" y="230">campo</text>
+  <text class="th" x="352" y="230">acierto</text>
+  <text class="th" x="432" y="230">tiempo</text>
+  <text class="th" x="512" y="230">tokens</text>
+  <text class="th" x="592" y="230">caché</text>
+  <text class="s" x="212" y="252">campo A</text>
+  <text class="s" x="352" y="252">0,91</text><text class="s" x="432" y="252">6,4 s</text><text class="s" x="512" y="252">2.900</text><text class="s" x="592" y="252">0,35</text>
+  <text class="s" x="212" y="272">campo B</text>
+  <text class="s" x="352" y="272">1,00</text><text class="s" x="432" y="272">5,1 s</text><text class="s" x="512" y="272">2.000</text><text class="s" x="592" y="272">0,00</text>
+  <text class="s" x="212" y="292">campo C</text>
+  <text class="s" x="352" y="292">0,80</text><text class="s" x="432" y="292">0,7 s</text><text class="s" x="512" y="292">330</text><text class="s" x="592" y="292">0,35</text>
+  <text class="s" x="212" y="315">La calidad y el coste se miran juntos: una mejora de acierto puede salir cara.</text>
+
+  <path class="ar" d="M180,253 L120,253 L120,362"/>
+  <rect class="box" x="24" y="362" width="200" height="62"/>
+  <text class="tb" x="124" y="386" text-anchor="middle">Discrepancias</text>
+  <text class="s" x="124" y="405" text-anchor="middle">qué falló exactamente</text>
+
+  <path class="ar" d="M680,253 L740,253 L740,362"/>
+  <rect class="box" x="636" y="362" width="200" height="62"/>
+  <text class="tb" x="736" y="386" text-anchor="middle">Resultados por versión</text>
+  <text class="s" x="736" y="405" text-anchor="middle">v0 · v1 · v2 · v3 archivados</text>
+
+  <path class="arl" d="M736,424 L736,468 L430,468 L430,352"/>
+  <rect class="accent" x="300" y="352" width="260" height="0" opacity="0"/>
+  <text class="s" x="430" y="488" text-anchor="middle">Comparar dos versiones es leer dos carpetas, no repetir el experimento</text>
+
+  <path class="arl" d="M124,424 L124,510 L430,510"/>
+  <text class="s" x="500" y="514">→ siguiente iteración del sistema</text>
+</svg>
