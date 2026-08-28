@@ -7,17 +7,19 @@ level: 3 proyectos · 2023–2026
 featured: true
 ---
 
-## Qué sé hacer
+## Qué resuelve
 
-Construyo flujos que pasan de una entrada en lenguaje natural a datos
-estructurados fiables, y los mantengo funcionando en un dominio donde
-equivocarse tiene consecuencias. Sé descomponer un problema grande en fases y
-campos independientes, versionar los prompts fuera del código, validar la salida
-antes de darla por buena y controlar lo que cuesta cada llamada.
+Un pipeline con LLM en producción rara vez falla por no saber llamar al modelo.
+Falla cuando inventa, cuando duplica y cuando nadie sabe qué cuesta cada
+ejecución. Diseño flujos que convierten una entrada en lenguaje natural en datos
+estructurados fiables y los mantengo funcionando en un dominio donde equivocarse
+tiene consecuencias.
 
-La parte que más me diferencia no es hacer que un modelo responda: es hacer que
-**no invente**, que no duplique, y que cuando no tenga evidencia suficiente lo
-diga en vez de rellenar el hueco.
+El trabajo está en descomponer un problema grande en fases y campos
+independientes, versionar los prompts fuera del código, validar la salida antes
+de darla por buena y controlar el gasto por llamada. La parte difícil no es que
+el modelo responda: es que **no invente**, que no duplique y que, cuando la
+evidencia no dé, lo diga en vez de rellenar el hueco.
 
 ## Herramientas y técnicas
 
@@ -33,100 +35,105 @@ diga en vez de rellenar el hueco.
 
 ![Arquitectura por fases y campos](./assets/pipeline-fases-campos.svg)
 
-## Dónde lo he hecho
+## Proyectos
 
 ### Producto asistencial en producción · sector salud · 2025–2026
 
-Es mi aportación principal en esta habilidad.
+Mi aportación principal en esta habilidad: el servicio de IA que convierte la
+grabación de una consulta en información clínica estructurada.
 
-**Contexto** · A partir de la grabación de una consulta hay que producir
-información clínica estructurada, campo a campo, lista para integrarse en el
-sistema del cliente.
+**Contexto** · El resultado entra campo a campo en el sistema del cliente y lo
+leen profesionales sanitarios, así que un dato inventado o duplicado no es un
+defecto cosmético: es un error que alguien tiene que detectar a mano.
 
-**Qué hice yo** · **Prácticamente todo el servicio de IA en Python**: el flujo
+**Mi aportación** · **Prácticamente todo el servicio de IA en Python**: el flujo
 completo de prompts y llamadas al modelo para las distintas líneas asistenciales
-del producto. Respaldado por el historial: soy el segundo autor del repositorio (de
-seis personas) y el primero con diferencia en la carpeta del servicio Python. Los
+del producto. Lo respalda el historial: segundo autor del repositorio de seis
+personas, y primero con diferencia en la carpeta del servicio Python. Los
 extractores por campo, el cargador de prompts, el cliente de modelo y la división
 del código en fases son míos.
 
 *Delimitación*: la capa web, la infraestructura, el despliegue y la base de datos
 son mayoritariamente de compañeros. Esta habilidad se ciñe al servicio de IA.
 
-**Cómo lo implementé**
+**Cómo lo abordé**
 
 - **Descomposición del flujo en fases explícitas** y **un extractor
   independiente por campo clínico** en lugar de una única llamada monolítica.
   Cada campo tiene sus reglas y puede evolucionar sin tocar los demás.
-- **Prompts fuera del código**, en un fichero de datos con su cargador. Se pueden
-  revisar y versionar sin desplegar código.
-- **Agrupación de peticiones por campo** para reducir el número de llamadas.
-- **Planificación de la cola de peticiones** para que el tiempo total no lo
-  marque la tarea más lenta.
-- **Caché de token de autenticación** con renovación anticipada, resuelto fuera
+- **Prompts fuera del código**, en un fichero de datos con su cargador: se
+  revisan y se versionan sin desplegar código.
+- **Agrupación de peticiones por campo** para reducir el número de llamadas, y
+  **planificación de la cola** para que el tiempo total no lo marque la tarea más
+  lenta.
+- **Caché de token de autenticación** con renovación anticipada, resuelta fuera
   del bucle de eventos para no bloquearlo.
-
-**Buenas prácticas aplicadas**
-
 - Validación contra catálogos maestros: no se emite un concepto que no exista.
 - Control explícito de duplicados en los campos donde repetir es un error
   clínico.
-- Instrumentación de tokens y tiempos, con variables de entorno para activar el
-  detalle.
-- Salida JSON estable en vez de texto libre parseado a posteriori.
+- Salida JSON estable en vez de texto libre parseado a posteriori, e
+  instrumentación de tokens y tiempos activable por variable de entorno.
 
-**Lo que faltó** · El repositorio no tiene un ejecutor de tests unificado ni
-linter configurado. La validación oficial es comprobación de sintaxis. Lo suplí
-construyendo un banco de evaluación propio (habilidad aparte), pero no sustituye
-a tests unitarios.
-
-**Cifras** · El pipeline se mide con ese banco, comparando versiones entre sí
-sobre un conjunto de casos de referencia. Las cifras de acierto no son
-publicables.
-
-**En uso real** · Sí, en producción con profesionales sanitarios, con despliegue
-continuo y trabajo activo sobre versiones nuevas de modelo.
+**Resultado** · En producción con profesionales sanitarios, con despliegue
+continuo y trabajo activo sobre versiones nuevas de modelo. El pipeline se mide
+con un banco de evaluación propio que compara versiones sobre un conjunto de
+casos de referencia; las cifras de acierto son del cliente y no se publican.
 
 ---
 
 ### I+D de NLP biomédico · sector salud · 2023–2024
 
-**Contexto** · La investigación previa donde se probó el enfoque que luego llegó
-a producto.
+La investigación previa donde se probó el enfoque que después llegó a producto.
 
-**Qué hice yo** · **Diseñé e implementé el pipeline entero**: transcripción,
+**Contexto** · Había que validar, sobre conversación asistencial real, que un
+flujo de transcripción y extracción con modelo de lenguaje daba resultados
+aprovechables.
+
+**Mi aportación** · **Diseñé e implementé el pipeline entero**: transcripción,
 estructuración de la conversación con modelo de lenguaje, extracción de campos y
 codificación. Segundo autor de cinco.
 
 *Delimitación*: el subproyecto de terminología avanzada era de compañeros.
 
-**Cómo lo implementé** · Reestructuré el proyecto entero en módulos por
-responsabilidad y **paralelicé el proceso**, que hasta entonces era secuencial.
+**Cómo lo abordé** · Reestructuré el proyecto en módulos por responsabilidad y
+**paralelicé el proceso**, que hasta entonces era secuencial. Los umbrales
+pasaron a ser parámetros en lugar de constantes repartidas por el código.
 
-**Buenas prácticas aplicadas** · Separación de responsabilidades en módulos;
-parametrización de umbrales en lugar de constantes repartidas.
-
-**Lo que faltó** · Sin tests, sin CI, dependencias mal declaradas. Era código de
-investigación y se nota.
-
-**En uso real** · No como repositorio; el enfoque sí pasó a producto.
+**Resultado** · El repositorio no llegó a desplegarse —era I+D—, pero el enfoque
+pasó al producto.
 
 ---
 
 ### Suite clínica modular · sector salud · 2025–2026
 
-**Contexto** · El mismo tipo de flujo clínico dentro de una plataforma
-multiproducto.
+El mismo tipo de flujo clínico dentro de una plataforma multiproducto, donde mi
+aportación es acotada.
 
-**Qué hice yo** · La **reorganización del módulo clínico** separando procesos de
-utilidades comunes, con limpieza y simplificación del código y aplicación de
-buenas prácticas de LLM y prompts. También documenté las funciones del módulo.
-Cuarto autor de cinco: mi aportación aquí es acotada.
+**Contexto** · Un módulo clínico que había crecido mezclando procesos y
+utilidades comunes, dentro de una plataforma con varios productos.
+
+**Mi aportación** · La **reorganización del módulo clínico**, separando procesos
+de utilidades comunes, con limpieza del código y aplicación de buenas prácticas
+de LLM y prompts. También documenté las funciones del módulo. Cuarto autor de
+cinco.
 
 *Delimitación*: los subsistemas de orquestación de agentes, búsqueda vectorial y
 transcripción son de compañeros.
 
-**Buenas prácticas aplicadas** · Separación procesos/comunes; extracción de la
-política de decisión a configuración validada; documentación de funciones.
+**Cómo lo abordé** · Separación entre procesos y utilidades comunes; extracción
+de la política de decisión a configuración validada; documentación de las
+funciones del módulo.
 
-**En uso real** · Sí, producto desplegado.
+**Resultado** · Producto desplegado y en uso.
+
+## Límites
+
+- El repositorio del producto asistencial no tiene un ejecutor de tests
+  unificado ni linter configurado: la validación oficial es comprobación de
+  sintaxis. Lo compenso con el banco de evaluación de extremo a extremo que
+  construí —descrito en
+  [Evaluación de sistemas de IA](/myself/skills/evaluacion-sistemas-ia)—, que no
+  sustituye a una suite de tests unitarios.
+- El proyecto de I+D no tenía tests, ni integración continua, ni las
+  dependencias bien declaradas. Es código de investigación y se comporta como
+  tal.

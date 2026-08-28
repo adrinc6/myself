@@ -155,17 +155,38 @@ entry`.
 
 ### Cuerpo
 
-`SKILL.md` ya trae la estructura buena. Consérvala, con estos ajustes:
+`SKILL.md` trae el material; la web tiene su propia estructura, que es esta:
 
 1. **Quita el `# Título` de la primera línea**: la página ya lo pinta desde el
    frontmatter, y repetirlo se ve mal.
-2. Mantén las secciones `## Qué sé hacer`, `## Herramientas y técnicas` y
-   `## Dónde lo he hecho`.
-3. Dentro de `## Dónde lo he hecho`, cada proyecto es un `###`. Sepáralos con
-   `---` para que se lean como bloques distintos.
-4. Las imágenes se referencian con ruta relativa: `![Descripción](./assets/x.svg)`.
-5. **No reescribas la prosa.** Corrige erratas y ajusta el formato; el contenido
-   ya está trabajado.
+2. Las secciones, en este orden y con estos nombres:
+   `## Qué resuelve`, `## Herramientas y técnicas`, `## Proyectos` y
+   `## Límites`.
+3. **Cada proyecto es un `###` que se pinta como tarjeta plegable.** El
+   encabezado se escribe `Título · sector · años`: la web parte por ` · ` y usa
+   el primer segmento como título y el resto como metadatos.
+4. **El primer párrafo de cada proyecto es la descripción de la tarjeta**: una o
+   dos frases, sin etiqueta en negrita, que es lo único que se ve con la tarjeta
+   plegada. No repitas en él lo que dice el `**Contexto**` justo debajo: el
+   gancho sitúa el proyecto, el contexto cuenta el problema.
+5. Dentro de la tarjeta, **cuatro etiquetas y no más**:
+   - `**Contexto**` · el problema, no la descripción del producto.
+   - `**Mi aportación**` · qué hiciste, con la *Delimitación* de lo que es de
+     compañeros y los recuentos de commits.
+   - `**Cómo lo abordé**` · implementación y buenas prácticas, en una lista.
+   - `**Resultado**` · cifras publicables y uso real, juntos.
+6. **Las limitaciones no van dentro de las tarjetas**: se agrupan en
+   `## Límites`, al final de la página, una viñeta por proyecto. Se enuncian y se
+   cierra la frase — sin "y lo digo", sin "nota de honestidad" y sin adjetivos
+   contra uno mismo. El hecho es lo que da credibilidad; el dramatismo resta.
+7. Los `---` entre proyectos son opcionales: la web los descarta porque cada
+   tarjeta ya lleva su borde.
+8. Las imágenes se referencian con ruta relativa: `![Descripción](./assets/x.svg)`.
+9. **Registro**: primera persona, sí, pero sobria. Alterna el sujeto —el
+   problema, el sistema, el resultado— en vez de encadenar frases que empiezan
+   por "Sé…" o "Hice…".
+10. **No inventes contenido.** Reordenar y ajustar el tono, sí; añadir hechos o
+    cifras que no estén en `_raw/`, no.
 
 ---
 
@@ -173,11 +194,14 @@ entry`.
 
 1. **No toques la descripción existente** salvo que el material nuevo la amplíe
    de verdad; en ese caso añade una frase, no rehagas el bloque.
-2. Añade los proyectos nuevos dentro de `## Dónde lo he hecho`, separados por
-   `---`.
-3. Actualiza el frontmatter: `tech` (solo lo nuevo, máximo 6) y `level` (el
+2. Añade los proyectos nuevos dentro de `## Proyectos`, con el formato de tarjeta
+   del paso 4A (encabezado `Título · sector · años`, gancho de una o dos frases,
+   y las cuatro etiquetas).
+3. Si el proyecto nuevo trae limitaciones, van como viñeta en `## Límites`, no
+   dentro de la tarjeta.
+4. Actualiza el frontmatter: `tech` (solo lo nuevo, máximo 6) y `level` (el
    recuento y el rango de años).
-4. Haz lo mismo en `index.en.md`, tocando **solo las mismas partes**.
+5. Haz lo mismo en `index.en.md`, tocando **solo las mismas partes**.
 
 ---
 
