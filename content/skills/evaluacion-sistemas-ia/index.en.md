@@ -7,16 +7,16 @@ level: 2 projects · 2026
 featured: true
 ---
 
-## What I can do
+## What it solves
 
-I build the infrastructure that tells you whether an AI system works, and **what
-it costs** to make it work. Not just accuracy: accuracy per field, time per
-phase, input and output tokens, and cache utilisation, all in the same table and
+"Is this better than what we had?" gets answered either with an impression or
+with a table. I build the infrastructure that answers it with a table: accuracy
+per field, time per phase, input and output tokens and cache utilisation, all
 comparable across versions.
 
-It is the difference between using a model and being able to answer for it. When
-someone asks "is this better than what we had?", I have something to answer with
-instead of an impression.
+It is the difference between using a model and being able to answer for it. A
+high average can hide one field that always fails, and an accuracy gain can turn
+out to be expensive; neither shows up unless it is measured separately.
 
 ## Tools and techniques
 
@@ -33,84 +33,78 @@ instead of an impression.
 
 ![Evaluation cycle](./assets/ciclo-evaluacion.svg)
 
-## Where I have done it
+## Projects
 
 ### Clinical product in production · healthcare sector · 2026
 
-My cleanest contribution in the whole portfolio: this piece is **entirely mine,
-from scratch**.
+The evaluation bench for the clinical pipeline, built from scratch: the piece of
+the portfolio that is most entirely mine.
 
 **Context** · There was a language-model extraction pipeline in production and no
 systematic way of knowing whether a prompt change or a model version made it
 better or worse.
 
-**What I did** · **I built the whole thing from scratch**, between June and July
-2026. No other author has touched that folder in the history. I designed the
-evaluation methodology as well as implementing it.
+**My contribution** · **I built the whole thing from scratch**, between June and
+July 2026, designing the evaluation methodology as well as implementing it. No
+other author has touched that folder in the history.
 
-*A note on honesty*: the bench measures a pipeline that I also **largely wrote
-myself**. It is a self-evaluation tool, not an independent audit.
+*Scope*: the bench measures a pipeline that I largely wrote myself. It is a
+self-evaluation tool, not an independent audit.
 
-**How I implemented it**
+**How I approached it**
 
 - **Versioned reference cases** in the repository, with expected output, so
   evaluation is reproducible and does not depend on data sitting on one machine.
 - **Per-field scoring** as well as overall: a high average can hide one specific
   field that always fails, and that is exactly the one to fix.
 - **Cost and latency metrics in the same table as quality metrics** — average
-  time, input and output tokens, cache utilisation — per phase and per field. It
-  lets you see that an accuracy gain is expensive before deploying it.
+  time, input and output tokens, cache utilisation — per phase and per field, so
+  an expensive accuracy gain shows up before deployment.
 - **Atomic mode**: each component measured in isolation, as well as the full
   flow, to locate where accuracy is lost.
-- **Results archived per version**, so comparing two versions means reading two
+- **Results archived per version**: comparing two versions means reading two
   folders, not repeating the experiment.
-- **Discrepancy export** to CSV: the list of what failed, to investigate it, not
-  just the summarising number.
-- **Custom HTML dashboard and console**, with no external dependencies.
-- Deliberate report design: a few numbers at the top for a quick look, the detail
-  below for investigation.
+- **Discrepancy export** to CSV, listing what failed, not just the summarising
+  number.
+- **Custom HTML dashboard and console**, with no external dependencies: a few
+  numbers at the top for a quick look, the detail below for investigation.
+- Dataset versioned alongside the code, separation between generation, execution,
+  evaluation and export, and results immutable per version.
 
-**Good practices applied** · Dataset versioned alongside the code; separation
-between generation, execution, evaluation and export; results immutable per
-version.
-
-**Numbers** · A versioned set of reference cases, with **several versions
-evaluated comparatively** and scoring broken down by clinical field and by
-clinical line. The accuracy figures belong to the client and are not
-published.
-
-**In real use** · Yes, it was used to decide on changes to the system in
-production.
+**Outcome** · It was used to decide on changes to the system in production.
+Several versions evaluated comparatively over a versioned reference case set,
+with scoring broken down by clinical field and clinical line; accuracy figures
+belong to the client and are not published.
 
 ---
 
 ### Geometric analysis library · aerospace sector · 2026
 
-**Context** · A labelling algorithm that had to be compared against the previous
-algorithm across several real parts.
+The engineering logbook that settled what counted as an improvement in the
+labelling module.
 
-**What I did** · The module's engineering logbook, with per-part metrics, root
-cause diagnosis and an **explicit record of discarded hypotheses**.
+**Context** · A new labelling algorithm had to be compared against the previous
+one across several real parts, and the obvious comparison — resembling the
+previous one — turned out to be the wrong one.
 
-**How I implemented it** · A per-part comparison table (parts resolved,
-unlabelled, duplicates, time) before and after the change, plus a section
-dedicated to why the obvious metric — resembling the previous algorithm — **was
-not the right metric**, because the previous one was getting it wrong.
+**My contribution** · The module's logbook, with per-part metrics, root cause
+diagnosis and an **explicit record of discarded hypotheses**.
 
-**Good practices applied** · Documenting dead ends so that nobody — myself
-included — repeats them; questioning the baseline instead of assuming it valid.
+**How I approached it** · A per-part comparison table — parts resolved,
+unlabelled, duplicates, time — before and after the change, plus a section on why
+the obvious metric did not serve: the baseline algorithm was getting it wrong, so
+resembling it was not the goal. Dead ends are documented so that nobody, myself
+included, repeats them.
 
-**Numbers** · A set of real parts of widely varying complexity. The detail is
-in
+**Outcome** · It guided the module's development. The detail is in
 [Algorithms and computational geometry](/myself/en/skills/algoritmia-geometria-computacional).
 
-**In real use** · Yes, it guided the module's development.
+## Limits
 
-## Where I fall short (and I say so)
-
-In the repositories I have worked on there are **barely any unit tests or
-configured linters**; several have none at all. My solid experience is in
-**evaluating AI systems** — measuring end-to-end behaviour — not in unit test
-coverage or setting up continuous integration pipelines. It is a real gap, and
-saying so here seems more useful than letting it surface in the first technical
-question.
+- My ground is **end-to-end evaluation**: measuring the behaviour of the complete
+  system. That is not the same as unit test coverage or setting up continuous
+  integration, and in those I have no solid experience — the repositories I have
+  worked on have barely any unit tests or configured linters, and several have
+  none at all.
+- The clinical product's bench measures code that is mostly mine: it serves to
+  decide between versions, not as independent validation.

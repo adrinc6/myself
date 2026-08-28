@@ -1,22 +1,22 @@
 ---
 title: Classifying free text against controlled vocabularies
-summary: "Automatically assigning closed-taxonomy codes to text written by people, with calibrated thresholds and declarative coding policies."
+summary: "Automatic assignment of closed-taxonomy codes to text written by people, with calibrated thresholds and declarative coding policies."
 category: Data & AI
 tech: [Python, embeddings, PostgreSQL, Elasticsearch]
 level: 3 projects · 2023–2026
 ---
 
-## What I can do
+## What it solves
 
 I turn text written by people into codes from a closed taxonomy, automatically
 and with control over false positives. I have built this kind of classifier three
 times, with three different approaches, across two products that are in
 production.
 
-I know when a similarity threshold over embeddings is the right tool, when a
-well-scored lexical search is enough, and when both need combining. And I know
-the hard part is not choosing the model: it is deciding what gets coded, against
-which vocabulary, and what to do when the system is not sure.
+When an embedding similarity threshold is the right tool, when a well-scored
+lexical search is enough, and when both have to be combined is a decision made by
+measuring. But the hard part is not choosing the model: it is deciding what gets
+coded, against which vocabulary, and what the system does when it is not sure.
 
 ## Tools and techniques
 
@@ -26,91 +26,96 @@ which vocabulary, and what to do when the system is not sure.
 - Explicit tie-breaking between admissible candidates.
 - Scored lexical search over an indexing engine, with separate indices per
   language.
-- Hybrid strategy: embedding-based retrieval versus title-based retrieval.
-- Declarative, validated coding policy.
+- Hybrid strategy: embedding retrieval versus title retrieval.
+- A declarative, validated coding policy.
 - Python, PostgreSQL, Elasticsearch.
 
 ![Classification flow](./assets/flujo-clasificacion.svg)
 
-## Where I have done it
+## Projects
 
 ### Biomedical NLP R&D · healthcare sector · 2023–2024
+
+The complete coding pipeline, end to end: my most extensive contribution within
+this skill.
 
 **Context** · Codes from several standard clinical taxonomies had to be assigned
 to the concepts appearing in natural language during a clinical conversation.
 
-**What I did** · **I designed and implemented the entire coding pipeline.** It is
-my most complete contribution within this skill. I was the second author of the
-repository, out of five people.
+**My contribution** · **I designed and implemented the entire coding pipeline.**
+Second author of the repository, out of five people.
 
-*Scope*: that same repository contained a more advanced terminology subproject
-(post-coordination, alternative matchers, knowledge graphs) run by colleagues. It
+*Scope*: that same repository contained a more advanced terminology subproject —
+post-coordination, alternative matchers, knowledge graphs — run by colleagues. It
 is not mine and I do not claim it.
 
-**How I implemented it** · Each extracted concept is resolved against an indexed
+**How I approached it** · Each extracted concept is resolved against an indexed
 catalogue, with an **explicit tie-breaking rule** when several candidates are
 admissible rather than taking the first. Concepts are routed to sub-indices
 according to their nature, a decision I made **after measuring** that a single
-index degraded accuracy.
+index degraded accuracy. Thresholds are **different per field type** rather than
+global: where a false positive is more costly, the threshold is stricter. The
+catalogue connection is kept separate from the operational data connection, and
+the full process is parallelised.
 
-**Good practices applied** · **Different thresholds per field type** rather than
-one global value — fields where a false positive is more costly get a stricter
-threshold; separation between the catalogue connection and the operational data
-connection; parallelisation of the full process.
-
-**What was missing** · No automated tests. Validation was manual, case by case.
-It is a real gap in the project and I acknowledge it.
-
-**In real use** · It was R&D. The approach later moved into the product; the
-repository itself was not deployed.
+**Outcome** · It was R&D: the repository was not deployed, but the approach later
+moved into the product.
 
 ---
 
 ### Modular clinical suite · healthcare sector · 2025–2026
 
+The configurable coding policy: what gets coded, against which vocabulary,
+without touching code.
+
 **Context** · Several product modules needed to code against different
 terminology systems, and each client wanted to code different things.
 
-**What I did** · The **configurable coding policy** and the multilingual search.
-Fourth author of a five-person repository; my part here is clearly bounded.
+**My contribution** · The **configurable coding policy** and the multilingual
+search. Fourth author of a five-person repository; my part here is clearly
+bounded.
 
 *Scope*: the post-coordination, vector search and personal data anonymisation
 subsystems belong to colleagues.
 
-**How I implemented it** · Instead of leaving the "what gets coded against what"
+**How I approached it** · Instead of leaving the "what gets coded against what"
 decision scattered through the code, I extracted it into a **multi-level
 declarative structure** with a validation function that rejects impossible
-combinations and allows partial overrides per deployment. A client can change the policy without
-touching code.
+combinations and allows partial overrides per deployment. Input configuration is
+validated strictly, with explanatory errors, safe defaults, partial override
+instead of full replacement, and defensive copying so nobody mutates the global
+policy by accident. It is one of the few pieces in the set that does have a
+dedicated automated test.
 
-**Good practices applied** · Strict validation of input configuration with
-explanatory errors; safe defaults; partial override instead of full replacement;
-defensive copying so nobody mutates the global policy by accident. **It is one of
-the few pieces in the set that does have a dedicated automated test.**
-
-**Numbers** · Multilingual search; no authorised accuracy figures.
-
-**In real use** · Yes, deployed product.
+**Outcome** · Deployed product, with multilingual search. A client can change the
+policy without touching code. No authorised accuracy figures.
 
 ---
 
 ### Clinical product in production · healthcare sector · 2025–2026
 
-**Context** · Coding as an integrated step within the clinical extraction flow
-that runs on every real consultation.
+Coding as an integrated step within the extraction flow that runs on every real
+consultation.
 
-**What I did** · The integration of coding within the per-field extractors, and
-duplicate control. Here coding is one piece of something larger — the LLM
-pipeline — which I cover under another skill.
+**Context** · Here coding is not a separate system but one piece of the LLM
+pipeline covered under
+[LLM pipelines in production](/myself/en/skills/pipelines-llm-produccion).
 
-**How I implemented it** · Coding is applied field by field, with validation
-against master catalogues so codes for non-existent concepts are never emitted.
+**My contribution** · The integration of coding within the per-field extractors,
+and duplicate control.
 
-**Good practices applied** · Verification against the catalogue before accepting a
-code; explicit deduplication.
+**How I approached it** · Coding is applied field by field, with verification
+against master catalogues before a code is accepted — a concept that does not
+exist is never emitted — and explicit deduplication.
 
-**Numbers** · Measured with the evaluation bench I built (see
+**Outcome** · In production with healthcare professionals. Measured with the
+evaluation bench I built (see
 [Evaluating AI systems](/myself/en/skills/evaluacion-sistemas-ia)); the specific
 figures are not publishable.
 
-**In real use** · Yes, in production with healthcare professionals.
+## Limits
+
+- The R&D project had no automated tests: validation was manual, case by case. It
+  is a real gap in the project.
+- Of the three, only in the first did I design the complete system; in the other
+  two my contribution is a bounded piece, as each card sets out.
