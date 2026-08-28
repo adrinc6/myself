@@ -51,8 +51,11 @@ Mira también si `content/skills/<slug>/` ya existe: si existe, vas a **ampliarl
   autoría o exactitud no está verificada. No las incorpores por tu cuenta.
 - **"Huecos de la entrevista"** → no bloquean. Se publica sin ese material y me
   avisas al final de lo que sigue faltando.
-- **"Limitaciones reconocidas"** → **van al texto publicado, no se ocultan.** Que
-  un repositorio no tuviera tests es información honesta y suma credibilidad.
+- **"Limitaciones reconocidas"** → **no van al texto publicado.** El sitio es un
+  portfolio, no un informe de auditoría: los defectos de un repositorio del
+  cliente no se cuentan. Se quedan en `_raw/` para tenerlos a mano en una
+  conversación, y condicionan lo que el texto puede afirmar, que no es lo mismo
+  que publicarlos.
 
 ---
 
@@ -104,14 +107,18 @@ Respeta las marcas `[NO PUBLICAR]` que el prompt 1 haya dejado en `RAW.md` o
 ### El límite, por el otro lado
 
 Generalizar es correcto; **exagerar no lo es**, y **vaciar tampoco**. No
-conviertas "sin cifras autorizadas" en una mejora inventada, ni "aportación
-acotada" en autoría completa. Y no te lleves por delante la señal de competencia:
+conviertas una cifra confidencial en una mejora inventada, ni una aportación
+parcial en autoría completa. Y no te lleves por delante la señal de competencia:
 si al recortar el texto deja de demostrar que sabes hacer algo, has ido
 demasiado lejos. Las dos pruebas del Paso 7 tienen que pasar a la vez.
 
-Los recuentos de commits ("27 de 29", "cuarto autor de cinco") **se mantienen
-siempre**: son de autoría, no del cliente, y son lo que hace creíble la
-delimitación.
+**La honestidad se sostiene por lo que se afirma, no por lo que se confiesa.**
+Los recuentos de commits y las cuentas de autoría ("27 de 29", "cuarto autor de
+cinco") **no se publican**: donde el trabajo es tuyo se dice en cualitativo —"lo
+construí de cero", "el servicio es mío"—; donde fue parcial, se describe lo que
+hiciste y punto, sin declarar qué porcentaje del repositorio te corresponde. El
+material de `_raw/` sí lo registra, y es lo que marca hasta dónde puede llegar la
+afirmación.
 
 ---
 
@@ -160,8 +167,8 @@ entry`.
 1. **Quita el `# Título` de la primera línea**: la página ya lo pinta desde el
    frontmatter, y repetirlo se ve mal.
 2. Las secciones, en este orden y con estos nombres:
-   `## Qué resuelve`, `## Herramientas y técnicas`, `## Proyectos` y
-   `## Límites`.
+   `## Qué resuelve`, `## Herramientas y técnicas` y `## Proyectos`. No hay
+   sección de límites.
 3. **Cada proyecto es un `###` que se pinta como tarjeta plegable.** El
    encabezado se escribe `Título · sector · años`: la web parte por ` · ` y usa
    el primer segmento como título y el resto como metadatos.
@@ -171,14 +178,19 @@ entry`.
    gancho sitúa el proyecto, el contexto cuenta el problema.
 5. Dentro de la tarjeta, **cuatro etiquetas y no más**:
    - `**Contexto**` · el problema, no la descripción del producto.
-   - `**Mi aportación**` · qué hiciste, con la *Delimitación* de lo que es de
-     compañeros y los recuentos de commits.
+   - `**Mi aportación**` · qué construiste tú. **Nunca lo que hicieron
+     compañeros**: el alcance se acota en positivo —"mi trabajo fue el servicio
+     de IA: los extractores, el cargador de prompts, el cliente de modelo"—, no
+     enumerando los subsistemas que llevaban otros.
    - `**Cómo lo abordé**` · implementación y buenas prácticas, en una lista.
    - `**Resultado**` · cifras publicables y uso real, juntos.
-6. **Las limitaciones no van dentro de las tarjetas**: se agrupan en
-   `## Límites`, al final de la página, una viñeta por proyecto. Se enuncian y se
-   cierra la frase — sin "y lo digo", sin "nota de honestidad" y sin adjetivos
-   contra uno mismo. El hecho es lo que da credibilidad; el dramatismo resta.
+6. **Nada de autocrítica ni de proyectos contados por lo que les faltó.** Fuera
+   "el código más flojo", "proyecto pequeño", "mi aportación es acotada", "no es
+   un proyecto de IA", "el repositorio no se desplegó". Cada proyecto se cuenta
+   por lo que resolvió. Cuando algo cambie de verdad lo que la página promete
+   —por ejemplo, que el modelo lo entrenara otra persona—, dilo **en positivo y
+   sin mencionar a nadie**: "trabajo sobre modelos ya entrenados", en
+   `## Qué resuelve`.
 7. Los `---` entre proyectos son opcionales: la web los descarta porque cada
    tarjeta ya lleva su borde.
 8. Las imágenes se referencian con ruta relativa: `![Descripción](./assets/x.svg)`.
@@ -197,8 +209,7 @@ entry`.
 2. Añade los proyectos nuevos dentro de `## Proyectos`, con el formato de tarjeta
    del paso 4A (encabezado `Título · sector · años`, gancho de una o dos frases,
    y las cuatro etiquetas).
-3. Si el proyecto nuevo trae limitaciones, van como viñeta en `## Límites`, no
-   dentro de la tarjeta.
+3. Las limitaciones del proyecto nuevo no se publican (paso 2).
 4. Actualiza el frontmatter: `tech` (solo lo nuevo, máximo 6) y `level` (el
    recuento y el rango de años).
 5. Haz lo mismo en `index.en.md`, tocando **solo las mismas partes**.
@@ -243,12 +254,15 @@ Traduce al inglés lo que hayas escrito o modificado.
 5. **Pasada del reclutador**, la contraria: *"¿queda claro que esta persona sabe
    hacer esto?"*. Si el recorte se ha llevado la señal de competencia, has ido
    demasiado lejos. Las dos tienen que pasar a la vez.
-6. **Pasada de correlación**: comprueba que ningún dato del cliente aparece en
+6. **Pasada de venta**: relee buscando tres cosas y quítalas todas —una frase
+   que describa trabajo de terceros, una cifra de autoría, un defecto de
+   repositorio—. Ninguna de las tres aporta nada a un cliente.
+7. **Pasada de correlación**: comprueba que ningún dato del cliente aparece en
    dos habilidades con formulación distinta. Comparar dos páginas no debe
    permitir deducir nada que ninguna revela por separado — si una dice "diez
    extractores" y otra "once campos", ahí hay una fuga.
-4. `npm run build` pasa sin errores ni avisos de i18n.
-5. Mira la página en `npm run dev` y comprueba que los diagramas se ven.
+8. `npm run build` pasa sin errores ni avisos de i18n.
+9. Mira la página en `npm run dev` y comprueba que los diagramas se ven.
 
 ---
 

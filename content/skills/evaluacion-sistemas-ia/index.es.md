@@ -14,9 +14,11 @@ una tabla. Monto la infraestructura que la responde con una tabla: acierto por
 campo, tiempo por fase, tokens de entrada y salida y aprovechamiento de caché,
 todo comparable entre versiones.
 
-Es la diferencia entre usar un modelo y poder responder por él. Un promedio alto
-puede esconder un campo que falla siempre, y una mejora de acierto puede salir
-carísima; ninguna de las dos cosas se ve sin medirlas por separado.
+Mi terreno es la **evaluación de extremo a extremo**: medir el comportamiento del
+sistema completo, de la entrada a la salida. Es la diferencia entre usar un
+modelo y poder responder por él. Un promedio alto puede esconder un campo que
+falla siempre, y una mejora de acierto puede salir carísima; ninguna de las dos
+cosas se ve sin medirlas por separado.
 
 ## Herramientas y técnicas
 
@@ -38,19 +40,14 @@ carísima; ninguna de las dos cosas se ve sin medirlas por separado.
 
 ### Producto asistencial en producción · sector salud · 2026
 
-El banco de evaluación del pipeline clínico, construido de cero: es la pieza más
-enteramente mía de todo el portfolio.
+El banco de evaluación del pipeline clínico, diseñado y construido de cero.
 
 **Contexto** · Había un pipeline de extracción con modelo de lenguaje en
 producción y ninguna forma sistemática de saber si un cambio de prompt o de
 versión de modelo lo mejoraba o lo empeoraba.
 
 **Mi aportación** · **Lo construí entero, de cero**, entre junio y julio de 2026,
-y diseñé la metodología de evaluación además de implementarla. Ningún otro autor
-ha tocado esa carpeta en el historial.
-
-*Delimitación*: el banco mide un pipeline que en su mayor parte también escribí
-yo. Es una herramienta de autoevaluación, no una auditoría independiente.
+y diseñé la metodología de evaluación además de implementarla.
 
 **Cómo lo abordé**
 
@@ -76,7 +73,7 @@ yo. Es una herramienta de autoevaluación, no una auditoría independiente.
 **Resultado** · Se usó para decidir sobre cambios del sistema en producción.
 Varias versiones evaluadas comparativamente sobre un conjunto de casos
 versionado, con puntuación desglosada por campo clínico y por línea asistencial;
-las cifras de acierto son del cliente y no se publican.
+las cifras concretas están sujetas a confidencialidad.
 
 ---
 
@@ -100,13 +97,3 @@ para que nadie, yo incluido, los repita.
 
 **Resultado** · Guio el desarrollo del módulo. El detalle está en
 [Algoritmia y geometría computacional](/myself/skills/algoritmia-geometria-computacional).
-
-## Límites
-
-- Mi terreno es la **evaluación de extremo a extremo**: medir el comportamiento
-  del sistema completo. No es lo mismo que cobertura de tests unitarios ni que
-  montar integración continua, y en eso no tengo experiencia sólida — en los
-  repositorios donde he trabajado apenas hay tests unitarios o linters
-  configurados, y en varios no hay ninguno.
-- El banco del producto asistencial mide código que en su mayoría es mío: sirve
-  para decidir entre versiones, no como validación independiente.

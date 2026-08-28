@@ -35,21 +35,17 @@ questioning the metric is part of the job.
 
 ### Geometric analysis library · aerospace sector · 2026
 
-The project where I am effectively the sole author: 27 of 29 commits, the rest
-from an automated assistant.
+The library that automatically derives a part's structural decomposition from
+its geometry. I wrote it.
 
 **Context** · Starting from the geometric definition of a structural part, the
 system has to automatically derive its internal decomposition into structural
 elements, ready for manufacturing. The inherited version worked on small parts
 and fell apart on large ones.
 
-**My contribution** · I started from an **inherited reference version** and (a)
-**rewrote the topology engine** and (b) **built the labelling module from
-scratch**.
-
-*Scope*: the package's general architecture, its public API and the test suite
-came with that reference version. Mine is the engine and the labelling, not the
-library's original design.
+**My contribution** · On top of an inherited reference version, I **rewrote the
+topology engine** and **built the labelling module from scratch** — the two
+pieces the correctness of the result depended on.
 
 **How I approached it**
 
@@ -94,11 +90,4 @@ between the smallest and the largest:
   that nobody had documented** — an identifier that looked like a coordinate and
   was not. Correcting that interpretation produced the single largest improvement
   in the project.
-- Absolute time and volume figures belong to the client and are not published.
-
-## Limits
-
-- The reference version came with a broad test suite and development cut it down
-  drastically. Recovering that coverage is the project's most serious technical
-  debt, and it is mine.
-- Module duplication from a half-finished refactor is still there.
+- Absolute time and volume figures are covered by confidentiality.

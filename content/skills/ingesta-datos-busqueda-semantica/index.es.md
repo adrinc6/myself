@@ -47,11 +47,7 @@ sin que cada consulta pagara el precio de esa dispersión.
 **Mi aportación** · La **ingesta completa de esos catálogos al motor de
 indexación**, el buscador multiidioma, el ajuste de la puntuación y los procesos
 de exportación e importación de índices entre entornos. También la descarga y
-normalización de un catálogo oficial regulado. Cuarto autor de un repositorio de
-cinco personas; esta parte es la más claramente mía.
-
-*Delimitación*: los subsistemas de búsqueda vectorial, orquestación de agentes y
-transcripción son de compañeros.
+normalización de un catálogo oficial regulado.
 
 **Cómo lo abordé**
 
@@ -74,29 +70,29 @@ transcripción son de compañeros.
   distintas.
 
 **Resultado** · Producto desplegado, con búsqueda multiidioma y los parámetros
-del proceso configurables. Sin cifras de volumen ni de latencia autorizadas.
+del proceso configurables. Las cifras de volumen y latencia están sujetas a
+confidencialidad.
 
 ---
 
 ### Extracción de un portal sin API · sector salud · 2023–2025
 
-Proyecto pequeño y enteramente mío —7 de 7 commits—, y el código más flojo del
-conjunto.
+Un sistema clínico de terceros sin ninguna vía de integración, resuelto con
+automatización de navegador.
 
 **Contexto** · Había que sacar información de un sistema clínico de terceros que
 no ofrecía ninguna vía de integración. La única forma de acceder era la interfaz
 web.
 
-**Mi aportación** · **Todo**: diseño e implementación del extractor completo. No
-es un proyecto de IA y no lo presento como tal: es extracción y automatización.
+**Mi aportación** · **Todo**: diseño e implementación del extractor completo.
 
 **Cómo lo abordé** · Automatización de navegador que recorre la interfaz, navega
 por las secciones, extrae la información de las tablas y la vuelca a ficheros
 tabulares; además descarga los documentos asociados. Cubre varias áreas
 funcionales del sistema.
 
-**Resultado** · Se usó para extraer datos reales. ~740 líneas; sin cifras de
-volumen autorizadas.
+**Resultado** · Se usó para extraer datos reales de varias áreas funcionales del
+sistema. Las cifras de volumen están sujetas a confidencialidad.
 
 ---
 
@@ -110,15 +106,5 @@ a la base de datos, como paso previo del pipeline de codificación que diseñé
 (detalle en
 [Clasificación contra vocabularios controlados](/myself/skills/clasificacion-vocabularios-controlados)).
 
-**Resultado** · Fue I+D; el repositorio no se desplegó.
-
-## Límites
-
-- El extractor del portal sin API tiene los defectos que se le suponen a un
-  script de 2023: dos ficheros que se duplican casi por completo en vez de
-  compartir módulo, selectores atados a identificadores autogenerados que se
-  rompen si cambia la interfaz, **credenciales escritas en el propio código**,
-  rutas absolutas de mi máquina y ninguna gestión de dependencias. Funcionó para
-  lo que hacía falta; hoy no lo escribiría así.
-- El proyecto de I+D era código de investigación: sin tests y sin integración
-  continua.
+**Resultado** · Dejó el catálogo consultable para el pipeline de codificación
+que corría encima.

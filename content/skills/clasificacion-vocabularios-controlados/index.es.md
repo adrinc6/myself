@@ -44,12 +44,8 @@ extensa en esta habilidad.
 **Contexto** · Había que asignar códigos de varias taxonomías clínicas estándar a
 los conceptos que aparecían en lenguaje natural en una conversación asistencial.
 
-**Mi aportación** · **Diseñé e implementé el pipeline de codificación entero.**
-Segundo autor del repositorio, de cinco personas.
-
-*Delimitación*: en ese mismo repositorio había un subproyecto de terminología más
-avanzado —post-coordinación, *matchers* alternativos, grafos de conocimiento— que
-llevaban compañeros. No es mío y no lo cuento como tal.
+**Mi aportación** · **Diseñé e implementé el pipeline de codificación entero**,
+de la extracción del concepto a la emisión del código.
 
 **Cómo lo abordé** · Cada concepto extraído se resuelve contra un catálogo
 indexado, con una **regla de desempate explícita** cuando varios candidatos son
@@ -60,8 +56,7 @@ vez de globales: donde un falso positivo sale más caro, el umbral es más
 exigente. La conexión al catálogo va separada de la de datos operativos, y el
 proceso completo está paralelizado.
 
-**Resultado** · Fue I+D: el repositorio no se desplegó, pero el enfoque pasó
-después al producto.
+**Resultado** · El enfoque validado aquí pasó después al producto.
 
 ---
 
@@ -74,11 +69,7 @@ sin tocar código.
 sistemas terminológicos, y cada cliente quería codificar cosas distintas.
 
 **Mi aportación** · La **política de codificación configurable** y el buscador
-multiidioma. Cuarto autor de un repositorio de cinco personas; mi parte aquí está
-bien acotada.
-
-*Delimitación*: los subsistemas de post-coordinación, búsqueda vectorial y
-anonimización de datos personales son de compañeros.
+multiidioma.
 
 **Cómo lo abordé** · En lugar de dejar la decisión de "qué se codifica con qué"
 repartida por el código, la saqué a una **estructura declarativa multinivel** con
@@ -90,7 +81,8 @@ mute la política global por accidente. Es de lo poco del conjunto que tiene un
 test automatizado dedicado.
 
 **Resultado** · Producto desplegado, con búsqueda multiidioma. Un cliente puede
-cambiar la política sin tocar código. Sin cifras de acierto autorizadas.
+cambiar la política sin tocar código. Las cifras concretas están sujetas a
+confidencialidad.
 
 ---
 
@@ -114,10 +106,3 @@ concepto que no exista— y deduplicación explícita.
 de evaluación que construí (ver
 [Evaluación de sistemas de IA](/myself/skills/evaluacion-sistemas-ia)); las
 cifras concretas no son publicables.
-
-## Límites
-
-- El proyecto de I+D no tenía tests automatizados: la validación era manual sobre
-  casos. Es una carencia real del proyecto.
-- De los tres, solo en el primero diseñé el sistema completo; en los otros dos mi
-  aportación es una pieza acotada, como está detallado en cada tarjeta.

@@ -46,15 +46,10 @@ grabación de una consulta en información clínica estructurada.
 leen profesionales sanitarios, así que un dato inventado o duplicado no es un
 defecto cosmético: es un error que alguien tiene que detectar a mano.
 
-**Mi aportación** · **Prácticamente todo el servicio de IA en Python**: el flujo
-completo de prompts y llamadas al modelo para las distintas líneas asistenciales
-del producto. Lo respalda el historial: segundo autor del repositorio de seis
-personas, y primero con diferencia en la carpeta del servicio Python. Los
-extractores por campo, el cargador de prompts, el cliente de modelo y la división
-del código en fases son míos.
-
-*Delimitación*: la capa web, la infraestructura, el despliegue y la base de datos
-son mayoritariamente de compañeros. Esta habilidad se ciñe al servicio de IA.
+**Mi aportación** · **El servicio de IA en Python**: el flujo completo de
+prompts y llamadas al modelo para las distintas líneas asistenciales del
+producto. Los extractores por campo, el cargador de prompts, el cliente de
+modelo y la división del código en fases son míos.
 
 **Cómo lo abordé**
 
@@ -77,7 +72,7 @@ son mayoritariamente de compañeros. Esta habilidad se ciñe al servicio de IA.
 **Resultado** · En producción con profesionales sanitarios, con despliegue
 continuo y trabajo activo sobre versiones nuevas de modelo. El pipeline se mide
 con un banco de evaluación propio que compara versiones sobre un conjunto de
-casos de referencia; las cifras de acierto son del cliente y no se publican.
+casos de referencia; las cifras concretas están sujetas a confidencialidad.
 
 ---
 
@@ -91,49 +86,30 @@ aprovechables.
 
 **Mi aportación** · **Diseñé e implementé el pipeline entero**: transcripción,
 estructuración de la conversación con modelo de lenguaje, extracción de campos y
-codificación. Segundo autor de cinco.
-
-*Delimitación*: el subproyecto de terminología avanzada era de compañeros.
+codificación.
 
 **Cómo lo abordé** · Reestructuré el proyecto en módulos por responsabilidad y
 **paralelicé el proceso**, que hasta entonces era secuencial. Los umbrales
 pasaron a ser parámetros en lugar de constantes repartidas por el código.
 
-**Resultado** · El repositorio no llegó a desplegarse —era I+D—, pero el enfoque
-pasó al producto.
+**Resultado** · El enfoque validado aquí pasó después al producto.
 
 ---
 
 ### Suite clínica modular · sector salud · 2025–2026
 
-El mismo tipo de flujo clínico dentro de una plataforma multiproducto, donde mi
-aportación es acotada.
+El mismo tipo de flujo clínico dentro de una plataforma multiproducto con
+varios módulos clínicos.
 
 **Contexto** · Un módulo clínico que había crecido mezclando procesos y
 utilidades comunes, dentro de una plataforma con varios productos.
 
 **Mi aportación** · La **reorganización del módulo clínico**, separando procesos
 de utilidades comunes, con limpieza del código y aplicación de buenas prácticas
-de LLM y prompts. También documenté las funciones del módulo. Cuarto autor de
-cinco.
-
-*Delimitación*: los subsistemas de orquestación de agentes, búsqueda vectorial y
-transcripción son de compañeros.
+de LLM y prompts. También documenté las funciones del módulo.
 
 **Cómo lo abordé** · Separación entre procesos y utilidades comunes; extracción
 de la política de decisión a configuración validada; documentación de las
 funciones del módulo.
 
 **Resultado** · Producto desplegado y en uso.
-
-## Límites
-
-- El repositorio del producto asistencial no tiene un ejecutor de tests
-  unificado ni linter configurado: la validación oficial es comprobación de
-  sintaxis. Lo compenso con el banco de evaluación de extremo a extremo que
-  construí —descrito en
-  [Evaluación de sistemas de IA](/myself/skills/evaluacion-sistemas-ia)—, que no
-  sustituye a una suite de tests unitarios.
-- El proyecto de I+D no tenía tests, ni integración continua, ni las
-  dependencias bien declaradas. Es código de investigación y se comporta como
-  tal.

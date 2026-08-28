@@ -14,9 +14,11 @@ with a table. I build the infrastructure that answers it with a table: accuracy
 per field, time per phase, input and output tokens and cache utilisation, all
 comparable across versions.
 
-It is the difference between using a model and being able to answer for it. A
-high average can hide one field that always fails, and an accuracy gain can turn
-out to be expensive; neither shows up unless it is measured separately.
+My ground is **end-to-end evaluation**: measuring the behaviour of the complete
+system, input to output. It is the difference between using a model and being
+able to answer for it. A high average can hide one field that always fails, and
+an accuracy gain can turn out to be expensive; neither shows up unless it is
+measured separately.
 
 ## Tools and techniques
 
@@ -37,19 +39,14 @@ out to be expensive; neither shows up unless it is measured separately.
 
 ### Clinical product in production · healthcare sector · 2026
 
-The evaluation bench for the clinical pipeline, built from scratch: the piece of
-the portfolio that is most entirely mine.
+The evaluation bench for the clinical pipeline, designed and built from scratch.
 
 **Context** · There was a language-model extraction pipeline in production and no
 systematic way of knowing whether a prompt change or a model version made it
 better or worse.
 
 **My contribution** · **I built the whole thing from scratch**, between June and
-July 2026, designing the evaluation methodology as well as implementing it. No
-other author has touched that folder in the history.
-
-*Scope*: the bench measures a pipeline that I largely wrote myself. It is a
-self-evaluation tool, not an independent audit.
+July 2026, designing the evaluation methodology as well as implementing it.
 
 **How I approached it**
 
@@ -73,8 +70,8 @@ self-evaluation tool, not an independent audit.
 
 **Outcome** · It was used to decide on changes to the system in production.
 Several versions evaluated comparatively over a versioned reference case set,
-with scoring broken down by clinical field and clinical line; accuracy figures
-belong to the client and are not published.
+with scoring broken down by clinical field and clinical line; the specific
+figures are covered by confidentiality.
 
 ---
 
@@ -98,13 +95,3 @@ included, repeats them.
 
 **Outcome** · It guided the module's development. The detail is in
 [Algorithms and computational geometry](/myself/en/skills/algoritmia-geometria-computacional).
-
-## Limits
-
-- My ground is **end-to-end evaluation**: measuring the behaviour of the complete
-  system. That is not the same as unit test coverage or setting up continuous
-  integration, and in those I have no solid experience — the repositories I have
-  worked on have barely any unit tests or configured linters, and several have
-  none at all.
-- The clinical product's bench measures code that is mostly mine: it serves to
-  decide between versions, not as independent validation.
