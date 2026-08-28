@@ -20,29 +20,39 @@ const links = [
 <header
   class="sticky top-0 z-50 border-b border-edge/70 bg-page/80 backdrop-blur-md"
 >
+  <!--
+    On a narrow phone the name, the three section links and the language
+    switcher do not fit on one line in Spanish, so the links drop to a second
+    row instead of being clipped. From `sm` up it is a single row again.
+  -->
   <nav
-    class="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6"
+    class="site-container flex flex-wrap items-center gap-x-3 gap-y-1 py-2 sm:flex-nowrap sm:py-3"
     aria-label={t('nav.home')}
   >
     <a
       href={localizedPath('', lang)}
-      class="shrink-0 text-sm font-semibold tracking-tight text-zinc-100 transition hover:text-accent"
+      class="order-1 mr-auto shrink-0 text-[13px] font-semibold tracking-tight text-zinc-100 transition hover:text-accent sm:text-sm"
     >
       {site.shortName}
     </a>
 
-    <div class="flex min-w-0 items-center gap-0.5 sm:gap-2">
+    <div
+      class="order-3 -ml-1 flex w-full min-w-0 items-center gap-0.5 sm:order-2 sm:ml-0 sm:w-auto sm:gap-2"
+    >
       {
         links.map((link) => (
           <a
             href={localizedPath(link.href, lang)}
-            class="rounded-lg px-1.5 py-1 text-sm whitespace-nowrap text-zinc-400 transition hover:bg-surface hover:text-zinc-100 sm:px-2"
+            class="rounded-lg px-1 py-1 text-[13px] whitespace-nowrap text-zinc-400 transition hover:bg-surface hover:text-zinc-100 sm:px-2 sm:text-sm"
           >
             {link.label}
           </a>
         ))
       }
       <span class="mx-1 hidden h-4 w-px bg-edge sm:block" aria-hidden="true"></span>
+    </div>
+
+    <div class="order-2 shrink-0 sm:order-3">
       <LangSwitcher lang={lang} route={route} />
     </div>
   </nav>

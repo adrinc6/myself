@@ -7,16 +7,16 @@ level: 2 proyectos · 2026
 featured: true
 ---
 
-## Qué sé hacer
+## Qué resuelve
 
-Monto la infraestructura que dice si un sistema de IA funciona, y **cuánto
-cuesta** que funcione. No solo acierto: acierto por campo, tiempo por fase,
-tokens de entrada y salida, y aprovechamiento de caché, todo en la misma tabla y
-comparable entre versiones.
+La pregunta "¿esto va mejor que lo de antes?" se responde con una impresión o con
+una tabla. Monto la infraestructura que la responde con una tabla: acierto por
+campo, tiempo por fase, tokens de entrada y salida y aprovechamiento de caché,
+todo comparable entre versiones.
 
-Es la diferencia entre usar un modelo y poder responder por él. Cuando alguien
-pregunta "¿esto va mejor que lo de antes?", tengo con qué contestar en vez de una
-impresión.
+Es la diferencia entre usar un modelo y poder responder por él. Un promedio alto
+puede esconder un campo que falla siempre, y una mejora de acierto puede salir
+carísima; ninguna de las dos cosas se ve sin medirlas por separado.
 
 ## Herramientas y técnicas
 
@@ -34,26 +34,25 @@ impresión.
 
 ![Ciclo de evaluación](./assets/ciclo-evaluacion.svg)
 
-## Dónde lo he hecho
+## Proyectos
 
 ### Producto asistencial en producción · sector salud · 2026
 
-Mi aportación más limpia de todo el portfolio: esta pieza es **enteramente mía,
-de cero**.
+El banco de evaluación del pipeline clínico, construido de cero: es la pieza más
+enteramente mía de todo el portfolio.
 
 **Contexto** · Había un pipeline de extracción con modelo de lenguaje en
 producción y ninguna forma sistemática de saber si un cambio de prompt o de
 versión de modelo lo mejoraba o lo empeoraba.
 
-**Qué hice yo** · **Lo construí entero, de cero**, entre junio y julio de 2026.
-Ningún otro autor ha tocado esa carpeta en el historial. Diseñé la metodología de
-evaluación además de implementarla.
+**Mi aportación** · **Lo construí entero, de cero**, entre junio y julio de 2026,
+y diseñé la metodología de evaluación además de implementarla. Ningún otro autor
+ha tocado esa carpeta en el historial.
 
-*Nota de honestidad*: el banco mide un pipeline que en su mayor parte **también
-escribí yo**. Es una herramienta de autoevaluación, no una auditoría
-independiente.
+*Delimitación*: el banco mide un pipeline que en su mayor parte también escribí
+yo. Es una herramienta de autoevaluación, no una auditoría independiente.
 
-**Cómo lo implementé**
+**Cómo lo abordé**
 
 - **Casos de referencia versionados** en el repositorio, con la salida esperada,
   para que la evaluación sea reproducible y no dependa de datos de una máquina
@@ -62,60 +61,52 @@ independiente.
   campo concreto que falla siempre, y ese es justo el que hay que arreglar.
 - **Métricas de coste y latencia en la misma tabla que las de calidad** —tiempo
   medio, tokens de entrada y salida, aprovechamiento de caché— por fase y por
-  campo. Permite ver que una mejora de acierto sale cara antes de desplegarla.
+  campo, para ver que una mejora de acierto sale cara antes de desplegarla.
 - **Modo atómico**: cada componente se mide aislado, además del flujo completo,
   para localizar en qué punto se pierde el acierto.
-- **Resultados archivados por versión**, de modo que comparar dos versiones es
-  leer dos carpetas, no repetir el experimento.
-- **Export de discrepancias** a CSV: el listado de lo que falló, para
-  investigarlo, no solo el número que resume.
-- **Cuadro de mando y consola en HTML** propios, sin dependencias externas.
-- Diseño del informe deliberado: pocos números arriba para mirar rápido, el
-  detalle debajo para investigar.
+- **Resultados archivados por versión**: comparar dos versiones es leer dos
+  carpetas, no repetir el experimento.
+- **Export de discrepancias** a CSV, con el listado de lo que falló, no solo el
+  número que lo resume.
+- **Cuadro de mando y consola en HTML** propios, sin dependencias externas, con
+  pocos números arriba para mirar rápido y el detalle debajo para investigar.
+- Dataset versionado junto al código, separación entre generación, ejecución,
+  evaluación y exportación, y resultados inmutables por versión.
 
-**Buenas prácticas aplicadas** · Dataset versionado junto al código; separación
-entre generación, ejecución, evaluación y exportación; resultados inmutables por
-versión.
-
-**Cifras** · Un conjunto de casos de referencia versionado, con **varias
-versiones evaluadas comparativamente** y puntuación desglosada por campo clínico
-y por línea asistencial. Las cifras de acierto son del cliente y no se
-publican.
-
-**En uso real** · Sí, se usó para decidir sobre cambios del sistema en
-producción.
+**Resultado** · Se usó para decidir sobre cambios del sistema en producción.
+Varias versiones evaluadas comparativamente sobre un conjunto de casos
+versionado, con puntuación desglosada por campo clínico y por línea asistencial;
+las cifras de acierto son del cliente y no se publican.
 
 ---
 
 ### Librería de análisis geométrico · sector aeronáutico · 2026
 
-**Contexto** · Un algoritmo de etiquetado que había que comparar contra el
-algoritmo anterior sobre varias piezas reales.
+La bitácora de ingeniería que decidió qué contaba como mejora en el módulo de
+etiquetado.
 
-**Qué hice yo** · La bitácora de ingeniería del módulo, con métricas por pieza,
-diagnóstico de la causa raíz y **registro explícito de las hipótesis
-descartadas**.
+**Contexto** · Había que comparar un algoritmo de etiquetado nuevo contra el
+anterior sobre varias piezas reales, y la comparación obvia —parecerse al
+anterior— resultó no ser la correcta.
 
-**Cómo lo implementé** · Tabla comparativa por pieza (piezas resueltas, sin
-etiqueta, duplicados, tiempo) antes y después del cambio, más una sección
-dedicada a por qué la métrica obvia —parecerse al algoritmo anterior— **no era la
-métrica correcta**, porque el anterior se equivocaba.
+**Mi aportación** · La bitácora del módulo, con métricas por pieza, diagnóstico
+de la causa raíz y **registro explícito de las hipótesis descartadas**.
 
-**Buenas prácticas aplicadas** · Documentar los callejones sin salida para que
-nadie —yo incluido— los repita; cuestionar la referencia en vez de asumirla
-válida.
+**Cómo lo abordé** · Tabla comparativa por pieza —piezas resueltas, sin etiqueta,
+duplicados, tiempo— antes y después del cambio, más una sección dedicada a por
+qué la métrica obvia no servía: el algoritmo de referencia se equivocaba, así que
+parecerse a él no era el objetivo. Los callejones sin salida quedan documentados
+para que nadie, yo incluido, los repita.
 
-**Cifras** · Un conjunto de piezas reales de complejidad muy dispar. El detalle
-está en
+**Resultado** · Guio el desarrollo del módulo. El detalle está en
 [Algoritmia y geometría computacional](/myself/skills/algoritmia-geometria-computacional).
 
-**En uso real** · Sí, guio el desarrollo del módulo.
+## Límites
 
-## Dónde NO llego (y lo digo)
-
-En los repositorios en los que he trabajado **apenas hay tests unitarios ni
-linters configurados**; en varios no hay ninguno. Mi experiencia sólida es en
-**evaluación de sistemas de IA** —medir comportamiento de extremo a extremo—, no
-en cobertura de tests unitarios ni en montar pipelines de integración continua.
-Es una carencia real y decirlo aquí me parece más útil que dejar que se descubra
-en la primera pregunta técnica.
+- Mi terreno es la **evaluación de extremo a extremo**: medir el comportamiento
+  del sistema completo. No es lo mismo que cobertura de tests unitarios ni que
+  montar integración continua, y en eso no tengo experiencia sólida — en los
+  repositorios donde he trabajado apenas hay tests unitarios o linters
+  configurados, y en varios no hay ninguno.
+- El banco del producto asistencial mide código que en su mayoría es mío: sirve
+  para decidir entre versiones, no como validación independiente.

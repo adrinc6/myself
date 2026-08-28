@@ -1,21 +1,22 @@
 ---
 title: Data ingestion and semantic search
-summary: "Bringing data in from official catalogues, databases or portals with no API, normalising it and making it queryable by text or by meaning."
+summary: "Bringing in data from official catalogues, databases or portals with no API, normalising it and leaving it queryable by text or by meaning."
 category: Data & AI
 tech: [Python, pandas, Elasticsearch, PostgreSQL, Selenium]
 level: 3 projects · 2023–2026
 ---
 
-## What I can do
+## What it solves
 
 I bring data in from wherever it lives — an official catalogue, a database, a web
-portal with no API — normalise it and make it queryable, whether by text or by
-meaning. I can build ingestion so that it is **resumable**: if it fails halfway,
-it continues where it left off instead of starting over, and it does not
-recompute what it already has.
+portal with no API — normalise it and leave it queryable, by text or by meaning.
+Ingestion is built to be **resumable**: if it fails halfway it carries on from
+where it was instead of starting over, and it does not recompute what it already
+has.
 
-I also know when semantic search adds value and when a well-scored lexical search
-is cheaper and works just as well.
+Search by meaning does not always win. For exact terms, a well-scored lexical
+search is more accurate and cheaper; deciding which one applies is part of the
+job, and it gets decided by measuring.
 
 ## Tools and techniques
 
@@ -27,30 +28,33 @@ is cheaper and works just as well.
 - Hybrid strategy: retrieval by meaning versus retrieval by title.
 - Search engine scoring tuning.
 - Index export and import between environments.
-- Catalogue normalisation: unifying nomenclature and deduplication.
+- Catalogue normalisation: unified nomenclature and deduplication.
 - Browser automation for sources with no API.
 - Python, pandas, numpy, Elasticsearch, PostgreSQL, Selenium.
 
 ![Ingestion and query flow](./assets/ingesta-y-consulta.svg)
 
-## Where I have done it
+## Projects
 
 ### Modular clinical suite · healthcare sector · 2025–2026
 
-**Context** · The product needed to query several official catalogues and
-vocabularies — from different sources, in different languages and different
-formats — from a single point and with acceptable response times.
+Several official catalogues, in different languages and formats, queryable from a
+single point and with acceptable response times.
 
-**What I did** · The **complete ingestion of those catalogues into the indexing
-engine**, the multilingual search, the scoring tuning, and the index export and
-import processes between environments. Also the download and normalisation of the
-official regulated catalogue. Fourth author of a five-person repository; this
-part is the most clearly mine.
+**Context** · The product needed to query official catalogues and vocabularies
+from different sources, in different languages and in different formats, without
+every query paying the price of that fragmentation.
+
+**My contribution** · The **complete ingestion of those catalogues into the
+indexing engine**, the multilingual search, the scoring tuning, and the index
+export and import processes between environments. Also the download and
+normalisation of an official regulated catalogue. Fourth author of a five-person
+repository; this part is the most clearly mine.
 
 *Scope*: the vector search, agent orchestration and transcription subsystems
 belong to colleagues.
 
-**How I implemented it**
+**How I approached it**
 
 - **Embeddings persisted in index-addressable storage** rather than in memory:
   the full catalogue does not fit comfortably in RAM.
@@ -65,54 +69,54 @@ belong to colleagues.
   application code, moving it to where the data already was.
 - **Index export and import**, to avoid repeating the full ingestion in every
   environment.
+- Retries on external service calls, batch processing, idempotency — rerunning
+  the ingestion neither duplicates nor recomputes — and text normalisation so
+  spelling variants do not create separate entries.
 
-**Good practices applied** · Retries on external service calls; batch processing;
-idempotency — rerunning the ingestion neither duplicates nor recomputes; text
-normalisation so that spelling variants do not create separate entries.
-
-**Numbers** · Multilingual search, with the process parameters configurable. No
-authorised volume or latency figures.
-
-**In real use** · Yes, deployed product.
+**Outcome** · Deployed product, with multilingual search and configurable process
+parameters. No authorised volume or latency figures.
 
 ---
 
 ### Extraction from a portal with no API · healthcare sector · 2023–2025
 
-A small project, but **entirely mine**: 7 of 7 commits.
+A small project, entirely mine — 7 of 7 commits — and the weakest code in the
+set.
 
 **Context** · Information had to be pulled out of a third-party clinical system
 that offered no integration path whatsoever. The only way in was the web
 interface.
 
-**What I did** · **Everything.** Design and implementation of the complete
-extractor.
+**My contribution** · **Everything**: design and implementation of the complete
+extractor. It is not an AI project and I do not present it as one: it is
+extraction and automation.
 
-**How I implemented it** · Browser automation that walks the interface, navigates
+**How I approached it** · Browser automation that walks the interface, navigates
 the sections, extracts the information from the tables and dumps it into tabular
 files; it also downloads the associated documents. It covers several functional
 areas of the system.
 
-**Numbers** · ~740 lines. No authorised volume figures.
-
-**In real use** · Yes, it was used to extract real data.
-
-**What I got wrong, and I say so** · This is the weakest code in the portfolio.
-Two scripts that duplicate each other almost entirely instead of sharing a
-module; selectors depending on autogenerated identifiers, which break if the
-interface changes; **credentials written into the code itself**; absolute paths
-from my machine; and no dependency management at all. It worked for what was
-needed, but it is not code I would defend today as an example of good work.
-
-**It is not an AI project** and I do not present it as one: it is extraction and
-automation.
+**Outcome** · It was used to extract real data. ~740 lines; no authorised volume
+figures.
 
 ---
 
 ### Biomedical NLP R&D · healthcare sector · 2023–2024
 
-**What I did** · Data preparation and loading the catalogue embeddings into the
-database, as a preliminary step of the coding pipeline I designed (detail in
+The data preparation and embedding loading that fed the coding pipeline.
+
+**My contribution** · Data preparation and loading the catalogue embeddings into
+the database, as a preliminary step of the coding pipeline I designed (detail in
 [Classifying against controlled vocabularies](/myself/en/skills/clasificacion-vocabularios-controlados)).
 
-**In real use** · It was R&D.
+**Outcome** · It was R&D; the repository was not deployed.
+
+## Limits
+
+- The no-API portal extractor has the flaws you would expect of a 2023 script:
+  two files duplicating each other almost entirely instead of sharing a module,
+  selectors tied to autogenerated identifiers that break if the interface
+  changes, **credentials written into the code itself**, absolute paths from my
+  machine and no dependency management. It worked for what was needed; I would
+  not write it that way today.
+- The R&D project was research code: no tests and no continuous integration.

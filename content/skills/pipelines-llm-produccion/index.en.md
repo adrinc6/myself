@@ -7,17 +7,19 @@ level: 3 projects · 2023–2026
 featured: true
 ---
 
-## What I can do
+## What it solves
 
-I build flows that go from natural-language input to reliable structured data,
-and I keep them running in a domain where getting it wrong has consequences. I
-can break a large problem into independent phases and fields, version prompts
-outside the code, validate output before treating it as good, and control what
-each call costs.
+An LLM pipeline in production rarely fails because nobody knows how to call the
+model. It fails when it invents, when it duplicates, and when nobody knows what
+each run costs. I design flows that turn natural-language input into reliable
+structured data, and keep them running in a domain where getting it wrong has
+consequences.
 
-What sets my work apart is not making a model respond: it is making sure it
-**does not make things up**, does not duplicate, and says when it lacks enough
-evidence instead of filling the gap.
+The work is in breaking a large problem into independent phases and fields,
+versioning the prompts outside the code, validating the output before treating it
+as good, and controlling the spend per call. The hard part is not making the
+model answer: it is making sure it **does not invent**, does not duplicate, and
+says so when the evidence is not there instead of filling the gap.
 
 ## Tools and techniques
 
@@ -32,95 +34,102 @@ evidence instead of filling the gap.
 
 ![Phase and field architecture](./assets/pipeline-fases-campos.svg)
 
-## Where I have done it
+## Projects
 
 ### Clinical product in production · healthcare sector · 2025–2026
 
-This is my main contribution within this skill.
+My main contribution in this skill: the AI service that turns the recording of a
+consultation into structured clinical information.
 
-**Context** · Starting from the recording of a consultation, the system has to
-produce structured clinical information, field by field, ready to integrate into
-the client's system.
+**Context** · The output goes field by field into the client's system and is read
+by healthcare professionals, so an invented or duplicated value is not a cosmetic
+defect: it is an error somebody has to catch by hand.
 
-**What I did** · **Practically the entire AI service in Python**: the complete
-flow of prompts and model calls for the product's various clinical lines. Backed
-by the history: I am the second author of the repository (out of six people) and
-by far the first within the Python service folder. The per-field extractors, the
+**My contribution** · **Practically the whole AI service in Python**: the full
+flow of prompts and model calls for the product's different clinical lines. The
+history backs it up: second author of a six-person repository, and by some
+distance the first in the Python service folder. The per-field extractors, the
 prompt loader, the model client and the split of the code into phases are mine.
 
-*Scope*: the web layer, infrastructure, deployment and database are mostly my
-colleagues' work. This skill covers the AI service only.
+*Scope*: the web layer, the infrastructure, the deployment and the database are
+mostly colleagues' work. This skill covers the AI service only.
 
-**How I implemented it**
+**How I approached it**
 
-- **Decomposition of the flow into explicit phases** and **one independent
-  extractor per clinical field** rather than a single monolithic call. Each field
-  has its own rules and can evolve without touching the others.
-- **Prompts outside the code**, in a data file with its own loader. They can be
+- **Breaking the flow into explicit phases** and **one independent extractor per
+  clinical field** instead of a single monolithic call. Each field has its own
+  rules and can evolve without touching the others.
+- **Prompts outside the code**, in a data file with its loader: they can be
   reviewed and versioned without deploying code.
-- **Request batching per field** to reduce the number of calls.
-- **Request queue planning** so that total time is not set by the slowest task.
-- **Authentication token cache** with early renewal, resolved outside the event
-  loop so it never blocks it.
-
-**Good practices applied**
-
+- **Grouping requests per field** to cut the number of calls, and **planning the
+  request queue** so the slowest task does not set the total time.
+- **An authentication token cache** with early renewal, resolved outside the
+  event loop so it never blocks it.
 - Validation against master catalogues: a concept that does not exist is never
   emitted.
-- Explicit duplicate control in the fields where repetition is a clinical error.
-- Token and timing instrumentation, with environment variables to turn on detail.
-- Stable JSON output instead of free text parsed after the fact.
+- Explicit duplicate control in the fields where repeating is a clinical error.
+- Stable JSON output rather than free text parsed after the fact, and token and
+  timing instrumentation switchable by environment variable.
 
-**What was missing** · The repository has no unified test runner and no linter
-configured. Official validation is a syntax check. I compensated by building my
-own evaluation bench (a separate skill), but that does not replace unit tests.
-
-**Numbers** · The pipeline is measured with that bench, comparing versions
-against each other over a set of reference cases. The accuracy figures are not
-publishable.
-
-**In real use** · Yes, in production with healthcare professionals, with
-continuous deployment and active work on new model versions.
+**Outcome** · In production with healthcare professionals, with continuous
+deployment and active work on new model versions. The pipeline is measured with
+an evaluation bench I built, comparing versions over a reference case set;
+accuracy figures belong to the client and are not published.
 
 ---
 
 ### Biomedical NLP R&D · healthcare sector · 2023–2024
 
-**Context** · The earlier research where the approach that later reached the
-product was tested.
+The earlier research where the approach that later reached the product was
+tested.
 
-**What I did** · **I designed and implemented the entire pipeline**:
-transcription, structuring the conversation with a language model, field
-extraction and coding. Second author out of five.
+**Context** · The point was to validate, on real clinical conversation, that a
+transcription and extraction flow driven by a language model produced usable
+results.
+
+**My contribution** · **I designed and implemented the whole pipeline**:
+transcription, structuring of the conversation with a language model, field
+extraction and coding. Second author of five.
 
 *Scope*: the advanced terminology subproject belonged to colleagues.
 
-**How I implemented it** · I restructured the whole project into modules by
-responsibility and **parallelised the process**, which until then was sequential.
+**How I approached it** · I restructured the project into modules by
+responsibility and **parallelised the process**, which until then ran
+sequentially. Thresholds became parameters instead of constants scattered through
+the code.
 
-**Good practices applied** · Separation of responsibilities into modules;
-thresholds parameterised instead of constants scattered around.
-
-**What was missing** · No tests, no CI, badly declared dependencies. It was
-research code and it shows.
-
-**In real use** · Not as a repository; the approach did make it into the product.
+**Outcome** · The repository was never deployed — it was R&D — but the approach
+moved on to the product.
 
 ---
 
 ### Modular clinical suite · healthcare sector · 2025–2026
 
-**Context** · The same kind of clinical flow inside a multi-product platform.
+The same kind of clinical flow inside a multi-product platform, where my
+contribution is a bounded one.
 
-**What I did** · The **reorganisation of the clinical module**, separating
-processes from shared utilities, with cleanup and simplification of the code and
-the application of good LLM and prompt practices. I also documented the module's
-functions. Fourth author out of five: my contribution here is limited.
+**Context** · A clinical module that had grown mixing processes and shared
+utilities, inside a platform holding several products.
+
+**My contribution** · The **reorganisation of the clinical module**, separating
+processes from shared utilities, cleaning up the code and applying good LLM and
+prompt practice. I also documented the module's functions. Fourth author of five.
 
 *Scope*: the agent orchestration, vector search and transcription subsystems
 belong to colleagues.
 
-**Good practices applied** · Separation of processes and shared code; decision
-policy extracted into validated configuration; function documentation.
+**How I approached it** · Separation between processes and shared utilities;
+extraction of the decision policy into validated configuration; documentation of
+the module's functions.
 
-**In real use** · Yes, deployed product.
+**Outcome** · Deployed product, in use.
+
+## Limits
+
+- The clinical product repository has no unified test runner and no linter
+  configured: official validation is a syntax check. I offset that with the
+  end-to-end evaluation bench I built — described in
+  [Evaluating AI systems](/myself/en/skills/evaluacion-sistemas-ia) — which is
+  not a substitute for a unit test suite.
+- The R&D project had no tests, no continuous integration and poorly declared
+  dependencies. It is research code and behaves like it.

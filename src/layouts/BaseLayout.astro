@@ -64,13 +64,13 @@ const year = new Date().getFullYear();
 
     <Nav lang={lang} route={route} />
 
-    <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:px-6 sm:py-14">
+    <main id="main" class="site-container flex-1 py-10 sm:py-14">
       <slot />
     </main>
 
     <footer class="border-t border-edge/70">
       <div
-        class="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between sm:px-6"
+        class="site-container flex flex-col gap-2 py-6 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between"
       >
         <p>© {year} {site.name}</p>
         <p>
