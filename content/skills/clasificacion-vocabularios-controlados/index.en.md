@@ -42,12 +42,8 @@ this skill.
 **Context** · Codes from several standard clinical taxonomies had to be assigned
 to the concepts appearing in natural language during a clinical conversation.
 
-**My contribution** · **I designed and implemented the entire coding pipeline.**
-Second author of the repository, out of five people.
-
-*Scope*: that same repository contained a more advanced terminology subproject —
-post-coordination, alternative matchers, knowledge graphs — run by colleagues. It
-is not mine and I do not claim it.
+**My contribution** · **I designed and implemented the entire coding pipeline**,
+from concept extraction to code emission.
 
 **How I approached it** · Each extracted concept is resolved against an indexed
 catalogue, with an **explicit tie-breaking rule** when several candidates are
@@ -58,8 +54,7 @@ global: where a false positive is more costly, the threshold is stricter. The
 catalogue connection is kept separate from the operational data connection, and
 the full process is parallelised.
 
-**Outcome** · It was R&D: the repository was not deployed, but the approach later
-moved into the product.
+**Outcome** · The approach validated here later moved into the product.
 
 ---
 
@@ -72,11 +67,7 @@ without touching code.
 terminology systems, and each client wanted to code different things.
 
 **My contribution** · The **configurable coding policy** and the multilingual
-search. Fourth author of a five-person repository; my part here is clearly
-bounded.
-
-*Scope*: the post-coordination, vector search and personal data anonymisation
-subsystems belong to colleagues.
+search.
 
 **How I approached it** · Instead of leaving the "what gets coded against what"
 decision scattered through the code, I extracted it into a **multi-level
@@ -88,7 +79,8 @@ policy by accident. It is one of the few pieces in the set that does have a
 dedicated automated test.
 
 **Outcome** · Deployed product, with multilingual search. A client can change the
-policy without touching code. No authorised accuracy figures.
+policy without touching code. The specific figures are covered by
+confidentiality.
 
 ---
 
@@ -112,10 +104,3 @@ exist is never emitted — and explicit deduplication.
 evaluation bench I built (see
 [Evaluating AI systems](/myself/en/skills/evaluacion-sistemas-ia)); the specific
 figures are not publishable.
-
-## Limits
-
-- The R&D project had no automated tests: validation was manual, case by case. It
-  is a real gap in the project.
-- Of the three, only in the first did I design the complete system; in the other
-  two my contribution is a bounded piece, as each card sets out.

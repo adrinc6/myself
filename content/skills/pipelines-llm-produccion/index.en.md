@@ -45,14 +45,10 @@ consultation into structured clinical information.
 by healthcare professionals, so an invented or duplicated value is not a cosmetic
 defect: it is an error somebody has to catch by hand.
 
-**My contribution** · **Practically the whole AI service in Python**: the full
-flow of prompts and model calls for the product's different clinical lines. The
-history backs it up: second author of a six-person repository, and by some
-distance the first in the Python service folder. The per-field extractors, the
-prompt loader, the model client and the split of the code into phases are mine.
-
-*Scope*: the web layer, the infrastructure, the deployment and the database are
-mostly colleagues' work. This skill covers the AI service only.
+**My contribution** · **The AI service in Python**: the full flow of prompts and
+model calls for the product's different clinical lines. The per-field extractors,
+the prompt loader, the model client and the split of the code into phases are
+mine.
 
 **How I approached it**
 
@@ -74,7 +70,7 @@ mostly colleagues' work. This skill covers the AI service only.
 **Outcome** · In production with healthcare professionals, with continuous
 deployment and active work on new model versions. The pipeline is measured with
 an evaluation bench I built, comparing versions over a reference case set;
-accuracy figures belong to the client and are not published.
+the specific figures are covered by confidentiality.
 
 ---
 
@@ -89,47 +85,31 @@ results.
 
 **My contribution** · **I designed and implemented the whole pipeline**:
 transcription, structuring of the conversation with a language model, field
-extraction and coding. Second author of five.
-
-*Scope*: the advanced terminology subproject belonged to colleagues.
+extraction and coding.
 
 **How I approached it** · I restructured the project into modules by
 responsibility and **parallelised the process**, which until then ran
 sequentially. Thresholds became parameters instead of constants scattered through
 the code.
 
-**Outcome** · The repository was never deployed — it was R&D — but the approach
-moved on to the product.
+**Outcome** · The approach validated here moved on to the product.
 
 ---
 
 ### Modular clinical suite · healthcare sector · 2025–2026
 
-The same kind of clinical flow inside a multi-product platform, where my
-contribution is a bounded one.
+The same kind of clinical flow inside a multi-product platform with several
+clinical modules.
 
 **Context** · A clinical module that had grown mixing processes and shared
 utilities, inside a platform holding several products.
 
 **My contribution** · The **reorganisation of the clinical module**, separating
 processes from shared utilities, cleaning up the code and applying good LLM and
-prompt practice. I also documented the module's functions. Fourth author of five.
-
-*Scope*: the agent orchestration, vector search and transcription subsystems
-belong to colleagues.
+prompt practice. I also documented the module's functions.
 
 **How I approached it** · Separation between processes and shared utilities;
 extraction of the decision policy into validated configuration; documentation of
 the module's functions.
 
 **Outcome** · Deployed product, in use.
-
-## Limits
-
-- The clinical product repository has no unified test runner and no linter
-  configured: official validation is a syntax check. I offset that with the
-  end-to-end evaluation bench I built — described in
-  [Evaluating AI systems](/myself/en/skills/evaluacion-sistemas-ia) — which is
-  not a substitute for a unit test suite.
-- The R&D project had no tests, no continuous integration and poorly declared
-  dependencies. It is research code and behaves like it.

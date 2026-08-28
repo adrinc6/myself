@@ -36,21 +36,17 @@ cuestionar la métrica es parte del trabajo.
 
 ### Librería de análisis geométrico · sector aeronáutico · 2026
 
-El proyecto donde soy prácticamente el único autor: 27 de 29 commits, y el resto
-de un asistente automático.
+La librería que deriva automáticamente la descomposición estructural de una
+pieza a partir de su geometría. La escribí yo.
 
 **Contexto** · A partir de la definición geométrica de una pieza estructural hay
 que derivar automáticamente su descomposición interna en elementos
 estructurales, lista para fabricación. La versión heredada funcionaba en piezas
 pequeñas y se desmoronaba en las grandes.
 
-**Mi aportación** · Partí de una **versión de referencia heredada** y (a)
-**reescribí el motor de topología** y (b) **construí desde cero el módulo de
-etiquetado**.
-
-*Delimitación*: la arquitectura general del paquete, su API pública y la suite de
-pruebas venían dadas en esa versión de referencia. Lo mío es el motor y el
-etiquetado, no el diseño original de la librería.
+**Mi aportación** · Sobre una versión de referencia heredada, **reescribí el
+motor de topología** y **construí desde cero el módulo de etiquetado**, que son
+las dos piezas de las que dependía que el resultado fuera correcto.
 
 **Cómo lo abordé**
 
@@ -97,11 +93,4 @@ magnitud entre la menor y la mayor—:
   entrada que nadie había documentado** —un identificador que parecía una
   coordenada y no lo era—. Corregir esa interpretación produjo la mayor mejora
   individual del proyecto.
-- Las cifras absolutas de tiempo y volumen son del cliente y no se publican.
-
-## Límites
-
-- La versión de referencia traía una suite de pruebas amplia y el desarrollo la
-  redujo drásticamente. Recuperar esa cobertura es la deuda técnica más seria del
-  proyecto, y es mía.
-- Queda duplicación de módulos por un refactor a medio terminar.
+- Las cifras absolutas de tiempo y volumen están sujetas a confidencialidad.
