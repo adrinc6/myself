@@ -29,6 +29,8 @@ as well as implementing it.
 - **Cost and latency in the same table as quality** —mean time, input and output
   tokens, cache usage—, per phase and per field. It shows that an accuracy gain
   comes expensive **before** it ships.
+- **Prompts ordered with the stable part first** so it gets cached: measuring
+  cache usage is what allowed cutting cost without touching quality.
 - **Results archived per version**, so comparing two versions means reading two
   folders rather than repeating the experiment.
 - **Discrepancy export** to CSV: the list of what failed, so it can be

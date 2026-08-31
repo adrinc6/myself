@@ -31,9 +31,8 @@ const [skills, projects, education, experience] = await Promise.all([
   getLocalizedCollection('experience', lang),
 ]);
 
-// The home page shows a preview; the section index pages show everything.
-const topSkills = skills.slice(0, 8);
-const topProjects = projects.slice(0, 4);
+// Skills and projects are shown in full and can be folded away; education and
+// experience show a preview and link to their index pages.
 const topEducation = education.slice(0, 4);
 const topExperience = experience.slice(0, 4);
 ---
@@ -53,9 +52,9 @@ const topExperience = experience.slice(0, 4);
       storageKey="skills-open"
     >
       {
-        topSkills.length > 0 ? (
+        skills.length > 0 ? (
           <div class="space-y-2">
-            {topSkills.map((entry) => (
+            {skills.map((entry) => (
               <SkillRow entry={entry} lang={lang} />
             ))}
           </div>
@@ -63,31 +62,21 @@ const topExperience = experience.slice(0, 4);
           <p class="text-sm text-zinc-500">{t('empty.skills')}</p>
         )
       }
-
-      {
-        skills.length > topSkills.length && (
-          <a
-            href={`${localizedPath('skills', lang)}#habilidades`}
-            class="mt-4 inline-block text-sm font-medium text-accent transition hover:text-zinc-50"
-          >
-            {t('card.viewAll')} <span aria-hidden="true">→</span>
-          </a>
-        )
-      }
     </CollapsibleSection>
 
-    <!-- Projects: the same work seen from the other side. -->
-    <SectionCard
+    <!-- Projects: the same work seen from the other side, folded the same way. -->
+    <CollapsibleSection
       id="projects"
       title={t('section.projects')}
       description={t('section.projects.desc')}
-      href={`${localizedPath('skills', lang)}#proyectos`}
-      linkLabel={t('card.viewAll')}
+      collapseLabel={t('projects.collapse')}
+      expandLabel={t('projects.expand')}
+      storageKey="projects-open"
     >
       {
-        topProjects.length > 0 ? (
+        projects.length > 0 ? (
           <div class="space-y-2">
-            {topProjects.map((entry) => (
+            {projects.map((entry) => (
               <SkillRow entry={entry} lang={lang} meta={projectMeta(entry)} />
             ))}
           </div>
@@ -95,7 +84,7 @@ const topExperience = experience.slice(0, 4);
           <p class="text-sm text-zinc-500">{t('empty.projects')}</p>
         )
       }
-    </SectionCard>
+    </CollapsibleSection>
 
     <!-- Education and experience: half width each on desktop -->
     <div class="grid gap-6 md:grid-cols-2">

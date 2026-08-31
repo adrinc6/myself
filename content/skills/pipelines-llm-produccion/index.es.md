@@ -33,6 +33,8 @@ lo diga en vez de rellenar el hueco.
   tiempo total no dependa de la última en llegar.
 - **Caché del token de autenticación** con renovación anticipada, fuera del
   bucle de eventos para no bloquearlo.
+- **La parte estable del prompt delante**, para que se pueda cachear y el coste
+  por llamada baje sin tocar la calidad.
 
 ## Cuándo lo uso
 

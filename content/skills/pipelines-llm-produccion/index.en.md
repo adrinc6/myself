@@ -32,6 +32,8 @@ rather than filling the gap.
   depend on the last one to arrive.
 - **Auth token caching** with early renewal, off the event loop so it never
   blocks it.
+- **The stable part of the prompt first**, so it can be cached and cost per
+  call drops without touching quality.
 
 ## When I use it
 

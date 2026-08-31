@@ -30,6 +30,8 @@ rather than an impression.
   folders.
 - **Discrepancy export** to CSV — the list of what failed, not just the number
   summarising it.
+- **Cache usage measured, not assumed**: it is the cheapest lever on cost per
+  call.
 - **A log of the hypotheses that were ruled out**, so nobody retries them.
 - A report with few numbers at the top for a quick look and the detail below for
   digging in.
