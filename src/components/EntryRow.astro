@@ -1,0 +1,97 @@
+---
+import type { Related } from '../lib/relations';
+import { localizedPath, type Lang } from '../i18n/utils';
+
+/**
+ * One row in the skills or projects list: a card that folds open to reveal the
+ * other side of the relationship.
+ *
+ * Collapsed it shows a name and one short line, so a whole list stays
+ * scannable. Open it shows the related items — for a skill, the projects that
+ * evidence it; for a project, the skills it fed — each with the single sentence
+ * explaining the pairing, plus a link into the full page.
+ *
+ * Built on <details>/<summary>: no JavaScript, and keyboard and screen-reader
+ * support come for free.
+ */
+interface Props {
+  title: string;
+  summary: string;
+  href: string;
+  /** Muted line beside the title: a category, or "salud · 2026 · En producción". */
+  meta?: string;
+  related: Related[];
+  relatedLabel: string;
+  readMoreLabel: string;
+  lang: Lang;
+}
+const { title, summary, href, meta, related, relatedLabel, readMoreLabel } =
+  Astro.props;
+---
+
+<details class="entry-row">
+  <summary class="entry-row__head">
+    <div class="min-w-0">
+      <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+        <h3 class="text-sm font-semibold text-zinc-50">{title}</h3>
+        {meta && <span class="text-xs text-zinc-500">{meta}</span>}
+      </div>
+      <p class="entry-row__desc">{summary}</p>
+    </div>
+
+    <span class="entry-row__chevron" aria-hidden="true">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M5 8l5 5 5-5"></path>
+      </svg>
+    </span>
+  </summary>
+
+  <div class="entry-row__body">
+    {
+      related.length > 0 && (
+        <>
+          <p class="text-xs font-medium tracking-wide text-zinc-500 uppercase">
+            {relatedLabel}
+          </p>
+          <ul class="mt-2.5 space-y-2.5">
+            {related.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="group/link block rounded-lg border border-edge bg-surface-raised px-3 py-2.5 transition hover:border-edge-strong focus-visible:border-accent"
+                >
+                  <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                    <span class="text-[13px] font-medium text-zinc-100 transition group-hover/link:text-accent">
+                      {item.title}
+                    </span>
+                    {item.meta && (
+                      <span class="text-[11px] text-zinc-500">{item.meta}</span>
+                    )}
+                  </div>
+                  <p class="mt-0.5 text-[13px] leading-relaxed text-zinc-400">
+                    {item.contribution}
+                  </p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+
+    <a
+      href={href}
+      class="mt-3.5 inline-flex items-center gap-1.5 text-[13px] font-medium text-accent transition hover:text-zinc-50"
+    >
+      {readMoreLabel} <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</details>

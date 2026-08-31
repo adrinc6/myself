@@ -1,31 +1,131 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SkillRow from './SkillRow.astro';
-import { getLocalizedCollection, useTranslations, type Lang } from '../i18n/utils';
+import CollapsibleSection from './CollapsibleSection.astro';
+import EntryRow from './EntryRow.astro';
+import {
+  entrySlug,
+  getLocalizedCollection,
+  localizedPath,
+  useTranslations,
+  type Lang,
+} from '../i18n/utils';
+import {
+  assertRelationsResolve,
+  projectMeta,
+  projectsForSkill,
+  skillsForProject,
+} from '../lib/relations';
 
+/**
+ * Skills and projects on one page, skills first.
+ *
+ * The two blocks are the same set of facts read in opposite directions: a skill
+ * folds open to show the projects that evidence it, a project folds open to
+ * show the skills it fed. Both sides are derived from the projects' own
+ * frontmatter, so they cannot disagree.
+ */
 interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+
+// A typo in a project's skill slug fails the build rather than silently
+// dropping a card.
+await assertRelationsResolve(lang);
+
 const skills = await getLocalizedCollection('skills', lang);
+const projects = await getLocalizedCollection('projects', lang);
+
+const skillRows = await Promise.all(
+  skills.map(async (entry) => {
+    const slug = entrySlug(entry);
+    return {
+      slug,
+      title: entry.data.title,
+      summary: entry.data.summary,
+      meta: entry.data.category,
+      href: localizedPath(`skills/${slug}`, lang),
+      related: await projectsForSkill(slug, lang),
+    };
+  }),
+);
+
+const projectRows = await Promise.all(
+  projects.map(async (entry) => {
+    const slug = entrySlug(entry);
+    return {
+      slug,
+      title: entry.data.title,
+      summary: entry.data.summary,
+      meta: projectMeta(entry),
+      href: localizedPath(`projects/${slug}`, lang),
+      related: await skillsForProject(entry, lang),
+    };
+  }),
+);
 ---
 
-<BaseLayout title={t('section.skills')} lang={lang} route="skills">
-  <h1 class="text-3xl font-bold tracking-tight text-zinc-50">
-    {t('section.skills')}
-  </h1>
-  <p class="mt-2 max-w-2xl text-sm text-zinc-400">{t('section.skills.desc')}</p>
+<BaseLayout title={t('nav.skills')} lang={lang} route="skills">
+  <div class="space-y-6">
+    <CollapsibleSection
+      id="habilidades"
+      title={t('section.skills')}
+      description={t('section.skills.desc')}
+      collapseLabel={t('skills.collapse')}
+      expandLabel={t('skills.expand')}
+      storageKey="skills-open"
+    >
+      {
+        skillRows.length > 0 ? (
+          <div class="space-y-2">
+            {skillRows.map((row) => (
+              <EntryRow
+                title={row.title}
+                summary={row.summary}
+                meta={row.meta}
+                href={row.href}
+                related={row.related}
+                relatedLabel={t('related.projects')}
+                readMoreLabel={t('card.readMore')}
+                lang={lang}
+              />
+            ))}
+          </div>
+        ) : (
+          <p class="text-sm text-zinc-500">{t('empty.skills')}</p>
+        )
+      }
+    </CollapsibleSection>
 
-  {
-    skills.length > 0 ? (
-      <div class="mt-8 space-y-2">
-        {skills.map((entry) => (
-          <SkillRow entry={entry} lang={lang} />
-        ))}
-      </div>
-    ) : (
-      <p class="mt-8 text-sm text-zinc-500">{t('empty.skills')}</p>
-    )
-  }
+    <CollapsibleSection
+      id="proyectos"
+      title={t('section.projects')}
+      description={t('section.projects.desc')}
+      collapseLabel={t('projects.collapse')}
+      expandLabel={t('projects.expand')}
+      storageKey="projects-open"
+    >
+      {
+        projectRows.length > 0 ? (
+          <div class="space-y-2">
+            {projectRows.map((row) => (
+              <EntryRow
+                title={row.title}
+                summary={row.summary}
+                meta={row.meta}
+                href={row.href}
+                related={row.related}
+                relatedLabel={t('related.skills')}
+                readMoreLabel={t('card.readMore')}
+                lang={lang}
+              />
+            ))}
+          </div>
+        ) : (
+          <p class="text-sm text-zinc-500">{t('empty.projects')}</p>
+        )
+      }
+    </CollapsibleSection>
+  </div>
 </BaseLayout>

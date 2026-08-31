@@ -4,16 +4,26 @@ import Tag from './Tag.astro';
 import { entrySlug, localizedPath, type Lang } from '../i18n/utils';
 
 /**
- * A skill as a wide, short row: title, one-line description and a few tech
- * chips. Rows stack vertically, one per line, so a long list stays scannable.
+ * A skill or project as a wide, short row: title, one-line description and a
+ * few tech chips. Rows stack vertically, one per line, so a long list stays
+ * scannable.
+ *
+ * Used for the home page previews, which link straight through. The index page
+ * uses EntryRow instead, which folds open to show the related items.
  */
 interface Props {
-  entry: CollectionEntry<'skills'>;
+  entry: CollectionEntry<'skills'> | CollectionEntry<'projects'>;
   lang: Lang;
+  /** Overrides the muted line beside the title. Projects pass their own. */
+  meta?: string;
 }
-const { entry, lang } = Astro.props;
+const { entry, lang, meta } = Astro.props;
 const slug = entrySlug(entry);
-const { title, summary, tech, level, category } = entry.data;
+const { title, summary, tech } = entry.data;
+
+const collection = 'sector' in entry.data ? 'projects' : 'skills';
+// Skills show their category; projects show "sector · period · status".
+const metaLine = meta ?? ('category' in entry.data ? entry.data.category : undefined);
 
 // Kept short so the row never grows to two lines of chips.
 const shownTech = tech.slice(0, 3);
@@ -21,7 +31,7 @@ const extraTech = tech.length - shownTech.length;
 ---
 
 <a
-  href={localizedPath(`skills/${slug}`, lang)}
+  href={localizedPath(`${collection}/${slug}`, lang)}
   class="group flex items-center gap-4 rounded-xl border border-edge bg-surface px-4 py-3 transition duration-200 hover:border-edge-strong hover:bg-surface-raised focus-visible:border-accent"
 >
   <div class="min-w-0 flex-1">
@@ -29,16 +39,7 @@ const extraTech = tech.length - shownTech.length;
       <h3 class="text-sm font-semibold text-zinc-50 transition group-hover:text-accent">
         {title}
       </h3>
-      {
-        category && (
-          <span class="text-xs text-zinc-500">{category}</span>
-        )
-      }
-      {
-        level && (
-          <span class="text-xs text-zinc-600">· {level}</span>
-        )
-      }
+      {metaLine && <span class="text-xs text-zinc-500">{metaLine}</span>}
     </div>
     <p class="mt-1 line-clamp-1 text-sm text-zinc-400">{summary}</p>
   </div>

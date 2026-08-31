@@ -1,0 +1,53 @@
+---
+import type { Related } from '../lib/relations';
+
+/**
+ * The cross-reference block at the foot of a detail page: from a skill, the
+ * projects that evidence it; from a project, the skills it fed.
+ *
+ * The cards are deliberately static — no folding, no chevron. They carry a name
+ * and one line saying why the pairing exists, and the whole card is the link.
+ * Anything more competes with the page they are sitting under.
+ */
+interface Props {
+  title: string;
+  items: Related[];
+}
+const { title, items } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section class="mt-12 border-t border-edge pt-8">
+      <h2 class="text-lg font-semibold tracking-tight text-zinc-50">{title}</h2>
+
+      <div class="mt-4 space-y-2">
+        {items.map((item) => (
+          <a
+            href={item.href}
+            class="group flex items-start gap-3 rounded-xl border border-edge bg-surface px-4 py-3 transition duration-200 hover:border-edge-strong hover:bg-surface-raised focus-visible:border-accent"
+          >
+            <div class="min-w-0 flex-1">
+              <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5">
+                <h3 class="text-sm font-semibold text-zinc-50 transition group-hover:text-accent">
+                  {item.title}
+                </h3>
+                {item.meta && <span class="text-xs text-zinc-500">{item.meta}</span>}
+              </div>
+              <p class="mt-1 text-sm leading-relaxed text-zinc-400">
+                {item.contribution}
+              </p>
+            </div>
+
+            <span
+              class="mt-0.5 shrink-0 text-zinc-600 transition group-hover:translate-x-0.5 group-hover:text-accent"
+              aria-hidden="true"
+            >
+              →
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}

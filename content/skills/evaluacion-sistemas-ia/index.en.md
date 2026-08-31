@@ -1,97 +1,47 @@
 ---
 title: Evaluating AI systems
-summary: "Infrastructure to measure whether an AI system works and what it costs to make it work: per-field accuracy, latency, tokens and caching in one view."
+summary: "Measuring whether an AI system works and what it costs to work: per-field accuracy, latency, tokens and cache in one view."
 category: Data & AI
 tech: [Python, asyncio, CSV, HTML]
-level: 2 projects · 2026
 featured: true
 ---
 
-## What it solves
+## What I can do
 
-"Is this better than what we had?" gets answered either with an impression or
-with a table. I build the infrastructure that answers it with a table: accuracy
-per field, time per phase, input and output tokens and cache utilisation, all
-comparable across versions.
+- Build a **versioned set of reference cases**, with expected output, so
+  evaluation is reproducible.
+- Score **per field**, not just globally: a high average hides the field that
+  always fails, which is exactly the one to fix.
+- Put **cost and latency in the same table as quality**, per phase and per field.
+- Compare versions without repeating the experiment, by archiving results.
+- Build the **dashboard** with no external dependencies.
 
-My ground is **end-to-end evaluation**: measuring the behaviour of the complete
-system, input to output. It is the difference between using a model and being
-able to answer for it. A high average can hide one field that always fails, and
-an accuracy gain can turn out to be expensive; neither shows up unless it is
-measured separately.
+It is the difference between using a model and **being able to answer for it**.
+When someone asks "is this better than before?", I have something to answer with
+rather than an impression.
 
-## Tools and techniques
+## Good practices
 
-- A reference case set with expected output (*ground truth*).
-- Reproducible runs per version, with results archived by version.
-- Scoring **per field**, not only overall, broken down by business line.
-- Cost and latency metrics alongside quality metrics, in the same view.
-- Atomic execution: each component measured separately, as well as the full flow.
-- CSV export to compare versions, and a discrepancy export to investigate
-  failures.
-- An HTML dashboard, with no external dependencies.
-- An engineering logbook that also records discarded hypotheses.
-- Python, `asyncio`.
+- **The dataset versioned alongside the code**, so it does not depend on one
+  machine.
+- **Atomic mode**: each component measured in isolation, alongside the full
+  flow, to locate where accuracy is lost.
+- **Immutable results per version**: comparing two versions means reading two
+  folders.
+- **Discrepancy export** to CSV — the list of what failed, not just the number
+  summarising it.
+- **A log of the hypotheses that were ruled out**, so nobody retries them.
+- A report with few numbers at the top for a quick look and the detail below for
+  digging in.
+
+## When I use it
+
+- Before changing a prompt or moving to a new model version. Without a baseline,
+  "it works better" is an opinion.
+- When an accuracy gain **comes expensive**: seeing it before shipping, not in
+  next month's invoice.
+- When the reference system you compare against **is the one getting it wrong**,
+  matching it stops being the goal. That is when I switch the metric to internal
+  consistency and document why.
 
 ![Evaluation cycle](./assets/ciclo-evaluacion.svg)
-
-## Projects
-
-### Clinical product in production · healthcare sector · 2026
-
-The evaluation bench for the clinical pipeline, designed and built from scratch.
-
-**Context** · There was a language-model extraction pipeline in production and no
-systematic way of knowing whether a prompt change or a model version made it
-better or worse.
-
-**My contribution** · **I built the whole thing from scratch**, between June and
-July 2026, designing the evaluation methodology as well as implementing it.
-
-**How I approached it**
-
-- **Versioned reference cases** in the repository, with expected output, so
-  evaluation is reproducible and does not depend on data sitting on one machine.
-- **Per-field scoring** as well as overall: a high average can hide one specific
-  field that always fails, and that is exactly the one to fix.
-- **Cost and latency metrics in the same table as quality metrics** — average
-  time, input and output tokens, cache utilisation — per phase and per field, so
-  an expensive accuracy gain shows up before deployment.
-- **Atomic mode**: each component measured in isolation, as well as the full
-  flow, to locate where accuracy is lost.
-- **Results archived per version**: comparing two versions means reading two
-  folders, not repeating the experiment.
-- **Discrepancy export** to CSV, listing what failed, not just the summarising
-  number.
-- **Custom HTML dashboard and console**, with no external dependencies: a few
-  numbers at the top for a quick look, the detail below for investigation.
-- Dataset versioned alongside the code, separation between generation, execution,
-  evaluation and export, and results immutable per version.
-
-**Outcome** · It was used to decide on changes to the system in production.
-Several versions evaluated comparatively over a versioned reference case set,
-with scoring broken down by clinical field and clinical line; the specific
-figures are covered by confidentiality.
-
----
-
-### Geometric analysis library · aerospace sector · 2026
-
-The engineering logbook that settled what counted as an improvement in the
-labelling module.
-
-**Context** · A new labelling algorithm had to be compared against the previous
-one across several real parts, and the obvious comparison — resembling the
-previous one — turned out to be the wrong one.
-
-**My contribution** · The module's logbook, with per-part metrics, root cause
-diagnosis and an **explicit record of discarded hypotheses**.
-
-**How I approached it** · A per-part comparison table — parts resolved,
-unlabelled, duplicates, time — before and after the change, plus a section on why
-the obvious metric did not serve: the baseline algorithm was getting it wrong, so
-resembling it was not the goal. Dead ends are documented so that nobody, myself
-included, repeats them.
-
-**Outcome** · It guided the module's development. The detail is in
-[Algorithms and computational geometry](/myself/en/skills/algoritmia-geometria-computacional).

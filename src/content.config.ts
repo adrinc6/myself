@@ -30,8 +30,9 @@ const shared = {
 
 /**
  * Skills are the backbone of the site: what I can actually do, each one
- * evidenced by the projects where I applied it. The projects live as sections
- * inside the skill's Markdown body, not as separate pages.
+ * evidenced by the projects where I applied it. The projects are their own
+ * collection; the list of projects shown on a skill page is derived from them,
+ * never written into the skill's Markdown.
  *
  * Folders starting with "_" are excluded, which keeps `_raw/` (the inbox for
  * material pending processing) out of the build.
@@ -53,9 +54,45 @@ const skills = defineCollection({
     category: z.string().optional(),
     // Concrete technologies backing the skill.
     tech: z.array(z.string()).default([]),
-    // Headline for the card: "3 proyectos", "2 años", etc.
-    level: z.string().optional(),
     featured: z.boolean().default(false),
+  }),
+});
+
+/**
+ * Projects are the other half of the story: skills say what I can do, projects
+ * say where I did it. Each project declares which skills it fed, and with what
+ * contribution, in its `skills` frontmatter array.
+ *
+ * That array is the ONLY place the skill/project relationship is written down.
+ * The reverse direction (a skill listing its projects) is derived from it at
+ * build time in src/lib/relations.ts, so the two directions cannot disagree.
+ */
+const projects = defineCollection({
+  loader: glob({
+    pattern: '**/index.{es,en}.md',
+    base: './content/projects',
+    generateId: idFromPath,
+    exclude: ['_*/**'],
+  }),
+  schema: z.object({
+    ...shared,
+    // Anonymised: sector and period, never the client or the product name.
+    sector: z.string(),
+    period: z.string(),
+    // "En producción" / "In production", when it is worth saying.
+    status: z.string().optional(),
+    tech: z.array(z.string()).default([]),
+    skills: z
+      .array(
+        z.object({
+          // Slug of a skill in the skills collection. Checked at build time.
+          slug: z.string(),
+          // Why this project earned that skill. One or two sentences: it is
+          // shown on a card in both directions, so it has to read both ways.
+          contribution: z.string(),
+        }),
+      )
+      .default([]),
   }),
 });
 
@@ -95,4 +132,4 @@ const experience = defineCollection({
   }),
 });
 
-export const collections = { skills, education, experience };
+export const collections = { skills, projects, education, experience };

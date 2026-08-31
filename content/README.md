@@ -2,15 +2,21 @@
 
 Todo lo que se ve en la web vive aquí como Markdown, separado del código.
 
-El portfolio está organizado **por habilidades**: cada una se describe a fondo y
-los proyectos aparecen dentro como evidencia de que sé aplicarla. No hay una
-colección de proyectos aparte.
+El portfolio se lee **en los dos sentidos**: una habilidad muestra los proyectos
+que la demuestran, y un proyecto muestra las habilidades que salieron de él. Las
+habilidades siguen siendo el eje, pero cada proyecto tiene ficha propia.
+
+Esa relación se escribe **una sola vez**: en el campo `skills` del frontmatter de
+cada proyecto. El sentido contrario se deriva en el build, así que las dos listas
+no pueden desincronizarse.
 
 | Carpeta | Qué contiene |
 |---|---|
-| `skills/` | Habilidades, con sus proyectos dentro |
+| `skills/` | Habilidades: qué sé hacer |
 | `skills/order.json` | En qué orden salen las habilidades en la web |
 | `skills/_raw/` | Bandeja de entrada: material sin procesar |
+| `projects/` | Proyectos: dónde lo he aplicado |
+| `projects/order.json` | En qué orden salen los proyectos en la web |
 | `education/` | Titulaciones y formación |
 | `experience/` | Puestos de trabajo |
 
@@ -34,16 +40,40 @@ consola. La web no se rompe por tener una traducción a medias.
 Las carpetas que empiezan por `_` las ignora el loader, así que `_raw/` y las
 plantillas de ejemplo no llegan a publicarse.
 
-## Cómo se escribe una habilidad
+## Cómo se escribe una habilidad o un proyecto
 
-El cuerpo del Markdown tiene dos partes:
+Las dos usan **tres epígrafes fijos**, y solo cambia el tercero:
 
-1. **La descripción de la habilidad**: qué sé hacer exactamente y hasta dónde
-   llega. No una lista de tecnologías, sino qué problemas sé resolver con ellas.
-2. **Una sección por proyecto** que la demuestre, separadas por `---`, con
-   contexto, implementación, cómo fue y resultados.
+| | Habilidad | Proyecto |
+|---|---|---|
+| 1 | `## Qué sé hacer` | `## Qué hice` |
+| 2 | `## Buenas prácticas` | `## Buenas prácticas` |
+| 3 | `## Cuándo lo uso` | `## Resultado` |
 
-Copia `skills/_ejemplo-habilidad/`, que lo documenta entero.
+El `summary` del frontmatter **hace de contexto** y no se repite dentro: no hay
+epígrafe "Contexto". Bullets cortos en vez de párrafos largos; el objetivo es que
+una ficha se lea en menos de un minuto.
+
+**El bloque de proyectos no se escribe a mano en la habilidad.** Se genera desde
+`projects/`. Escribirlo en el Markdown lo duplicaría y acabaría desfasado.
+
+## Cómo se enlazan habilidades y proyectos
+
+En el frontmatter del **proyecto**, y solo ahí:
+
+```yaml
+skills:
+  - slug: pipelines-llm-produccion
+    contribution: "Diez extractores independientes, uno por campo clínico."
+```
+
+`slug` es el nombre de la carpeta de la habilidad. Si no existe, **el build
+falla** indicando el fichero y los slugs válidos.
+
+`contribution` se muestra en las dos direcciones —en la habilidad, bajo el
+nombre del proyecto; en el proyecto, bajo el nombre de la habilidad—, así que
+tiene que leerse bien en ambos sentidos: *qué me dio este proyecto en esa
+habilidad*.
 
 ## Cómo añadir un proyecto
 
@@ -74,10 +104,21 @@ habilidad que no aparezca en esa lista sale al final, por orden alfabético.
 |---|---|---|
 | `category` | texto | Área amplia: "Datos e IA", "Ingeniería" |
 | `tech` | lista | Tecnologías. En la fila solo se ven las 3 primeras |
-| `level` | texto | Titular corto: "3 proyectos", "2 años" |
 | `featured` | booleano | Destacar |
 
 El orden de las habilidades **no** se toca aquí, sino en `skills/order.json`.
+
+**Solo en `projects/`**
+
+| Campo | Tipo | Notas |
+|---|---|---|
+| `sector` | texto | Obligatorio. "Salud", "Aeronáutico" |
+| `period` | texto | Obligatorio. **Entrecomillado**: `"2026"` sin comillas es un número y rompe el build |
+| `status` | texto | "En producción", "Revisión de cliente" |
+| `tech` | lista | Tecnologías y vocabularios |
+| `skills` | lista | El enlace con las habilidades. Ver arriba |
+
+El orden de los proyectos se define en `projects/order.json`.
 
 **Solo en `education/`**: `institution` y `startDate` (obligatorios), `endDate`,
 `specialty`, `location`.
@@ -92,9 +133,9 @@ El orden de las habilidades **no** se toca aquí, sino en `skills/order.json`.
 - **Cuidado con los dos puntos en YAML.** Un `summary: Llevar a producto:
   prompts y validación` rompe el build: hay que entrecomillar la cadena entera.
 - **Los campos opcionales se omiten, no se vacían.**
-- **Entre idiomas deben coincidir** `tech`, `order`, `featured` y `draft` (y las
-  fechas en educación y experiencia). Si divergen, las dos versiones del sitio se
-  desincronizan.
+- **Entre idiomas deben coincidir** `tech`, `order`, `featured`, `draft` y los
+  `slug` de `skills` (y las fechas en educación y experiencia). Si divergen, las
+  dos versiones del sitio se desincronizan. El `contribution` sí se traduce.
 
 Si algo no cuadra con el esquema, el build falla indicando el archivo y el campo
 concreto. El esquema completo está en

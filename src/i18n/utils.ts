@@ -1,8 +1,9 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { ui, defaultLang, languages, type Lang, type UIKey } from './ui';
 import skillOrder from '../../content/skills/order.json';
+import projectOrder from '../../content/projects/order.json';
 
-type AnyCollection = 'skills' | 'education' | 'experience';
+type AnyCollection = 'skills' | 'projects' | 'education' | 'experience';
 type AnyEntry = CollectionEntry<AnyCollection>;
 
 /**
@@ -65,28 +66,29 @@ export function entrySlug(entry: AnyEntry): string {
 }
 
 /**
- * Position of a skill in content/skills/order.json. A slug missing from the
+ * Position of a slug in a hand-maintained order list. A slug missing from the
  * list falls to the end, where the comparator sorts it alphabetically, so
- * forgetting to add a new skill hides it from nobody.
+ * forgetting to add a new entry hides it from nobody.
  */
-function skillPosition(slug: string): number {
-  const index = (skillOrder.order as string[]).indexOf(slug);
+function listPosition(order: string[], slug: string): number {
+  const index = order.indexOf(slug);
   return index === -1 ? Number.POSITIVE_INFINITY : index;
 }
 
 /**
  * Sorts entries for display.
  *
- * Skills follow the hand-maintained list in content/skills/order.json, so the
- * running order lives in one file instead of being spread across every
- * frontmatter. Education and experience keep their own `order` field and fall
- * back to most recent first.
+ * Skills and projects follow a hand-maintained list (content/skills/order.json,
+ * content/projects/order.json), so the running order lives in one file instead
+ * of being spread across every frontmatter. Education and experience keep their
+ * own `order` field and fall back to most recent first.
  */
 function byDisplayOrder(collection: AnyCollection) {
   return (a: AnyEntry, b: AnyEntry): number => {
-    if (collection === 'skills') {
-      const aPosition = skillPosition(entrySlug(a));
-      const bPosition = skillPosition(entrySlug(b));
+    if (collection === 'skills' || collection === 'projects') {
+      const order = collection === 'skills' ? skillOrder.order : projectOrder.order;
+      const aPosition = listPosition(order as string[], entrySlug(a));
+      const bPosition = listPosition(order as string[], entrySlug(b));
       if (aPosition !== bPosition) return aPosition < bPosition ? -1 : 1;
       return a.data.title.localeCompare(b.data.title);
     }

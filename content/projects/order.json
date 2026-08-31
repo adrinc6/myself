@@ -1,0 +1,11 @@
+{
+  "$comment": "El orden de esta lista es el orden en que salen los proyectos en la web. Para reordenar, mueve las líneas. Los proyectos que no aparezcan aquí van al final, por orden alfabético.",
+  "order": [
+    "informe-clinico-desde-consulta",
+    "despiece-piezas-aeronauticas",
+    "banco-evaluacion-ia",
+    "buscador-clinico-multiidioma",
+    "investigacion-nlp-biomedico",
+    "medicion-perfiles-vision"
+  ]
+}

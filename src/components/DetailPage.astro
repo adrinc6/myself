@@ -2,6 +2,7 @@
 import { render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Tag from './Tag.astro';
+import RelatedList from './RelatedList.astro';
 import {
   entrySlug,
   formatDateRange,
@@ -9,8 +10,9 @@ import {
   useTranslations,
   type Lang,
 } from '../i18n/utils';
+import { projectMeta, projectsForSkill, skillsForProject } from '../lib/relations';
 
-type Collection = 'skills' | 'education' | 'experience';
+type Collection = 'skills' | 'projects' | 'education' | 'experience';
 
 interface Props {
   entry: CollectionEntry<Collection>;
@@ -27,19 +29,40 @@ const data = entry.data as CollectionEntry<Collection>['data'] & {
   specialty?: string;
   location?: string;
   category?: string;
-  level?: string;
   tech?: string[];
   startDate?: string;
   endDate?: string;
+  sector?: string;
+  period?: string;
+  status?: string;
 };
 
 const slug = entrySlug(entry);
+
+// Skills and projects share one index page, so both go back to the same place —
+// but to their own section of it.
 const backLabel =
-  collection === 'skills'
-    ? t('section.skills')
+  collection === 'skills' || collection === 'projects'
+    ? t('nav.skills')
     : collection === 'education'
       ? t('section.education')
       : t('section.experience');
+const backHref =
+  collection === 'skills'
+    ? `${localizedPath('skills', lang)}#habilidades`
+    : collection === 'projects'
+      ? `${localizedPath('skills', lang)}#proyectos`
+      : localizedPath(collection, lang);
+
+// The cross-reference block: the opposite side of the relationship.
+const related =
+  collection === 'skills'
+    ? await projectsForSkill(slug, lang)
+    : collection === 'projects'
+      ? await skillsForProject(entry as CollectionEntry<'projects'>, lang)
+      : [];
+const relatedLabel =
+  collection === 'skills' ? t('related.projects') : t('related.skills');
 
 // The organisation shown under the title, whichever collection this is.
 // Skills have no organisation, so this is simply absent for them.
@@ -54,7 +77,7 @@ const org = data.institution ?? data.company;
 >
   <article>
     <a
-      href={localizedPath(collection, lang)}
+      href={backHref}
       class="inline-flex items-center gap-1.5 text-sm text-zinc-400 transition hover:text-accent"
     >
       <span aria-hidden="true">←</span> {backLabel}
@@ -65,9 +88,10 @@ const org = data.institution ?? data.company;
         {data.startDate && formatDateRange(data.startDate, data.endDate, lang)}
         {data.startDate && data.location && <span> · </span>}
         {data.location && <span>{data.location}</span>}
-        {!data.startDate && data.category && <span>{data.category}</span>}
-        {!data.startDate && data.category && data.level && <span> · </span>}
-        {!data.startDate && data.level && <span>{data.level}</span>}
+        {!data.startDate && data.sector && (
+          <span>{projectMeta(entry as CollectionEntry<'projects'>)}</span>
+        )}
+        {!data.startDate && !data.sector && data.category && <span>{data.category}</span>}
       </p>
 
       <h1 class="mt-2 text-3xl font-bold tracking-tight text-zinc-50 sm:text-4xl">
@@ -101,5 +125,7 @@ const org = data.institution ?? data.company;
     <div class="prose-dark mt-8">
       <Content />
     </div>
+
+    <RelatedList title={relatedLabel} items={related} />
   </article>
 </BaseLayout>
