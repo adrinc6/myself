@@ -29,6 +29,9 @@ de evaluación además de la implementación.
 - **Coste y latencia en la misma tabla que la calidad** —tiempo medio, tokens de
   entrada y salida, aprovechamiento de caché—, por fase y por campo. Permite ver
   que una mejora de acierto sale cara **antes** de desplegarla.
+- **Prompts ordenados con la parte estable delante** para que se cachee: medir
+  el aprovechamiento de caché fue lo que permitió recortar coste sin tocar la
+  calidad.
 - **Resultados archivados por versión**, de modo que comparar dos versiones es
   leer dos carpetas, no repetir el experimento.
 - **Export de discrepancias** a CSV: el listado de lo que falló para poder

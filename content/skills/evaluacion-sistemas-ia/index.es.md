@@ -30,6 +30,8 @@ vez de una impresión.
   carpetas.
 - **Export de discrepancias** a CSV — el listado de lo que falló, no solo el
   número que lo resume.
+- **Aprovechamiento de caché medido, no supuesto**: es la palanca más barata
+  sobre el coste por llamada.
 - **Bitácora con las hipótesis descartadas**, para que nadie las repita.
 - Informe con pocos números arriba para mirar rápido y el detalle debajo para
   investigar.
